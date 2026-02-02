@@ -1,0 +1,19 @@
+import { Types } from 'mongoose'
+
+export namespace IWishlist {
+  export interface Doc extends Document {
+    userRef: Types.ObjectId | string
+    businessRef: Types.ObjectId | string
+  }
+  export interface General {
+    userRef: Types.ObjectId | string
+    businessRef: Types.ObjectId | string
+  }
+  export interface Query {
+    userRef?: Types.ObjectId | string
+    businessRef?: Types.ObjectId | string
+    limit?: number
+    page?: number
+  }
+}
+export default IWishlist
