@@ -11,7 +11,7 @@ const WishlistController = {
       })
       res.status(200).json({ success: true, wishlist })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
   delete: async (req: Request, res: Response, next: Function) => {
@@ -22,7 +22,7 @@ const WishlistController = {
       })
       res.status(200).json({ success: true, wishlist })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
   query: async (req: Request, res: Response, next: Function) => {
@@ -31,7 +31,7 @@ const WishlistController = {
       const wishlist = await WishlistRepo.query(_query)
       res.status(200).json({ success: true, wishlist })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
 }

@@ -31,7 +31,7 @@ const Authentication = {
       req.user = user
       return next()
     } catch (error: any) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
 }

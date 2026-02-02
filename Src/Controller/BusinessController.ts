@@ -13,7 +13,7 @@ const BusinessController = {
       })
       res.status(200).json({ success: true, business })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
   update: async (req: Request, res: Response, next: Function) => {
@@ -24,7 +24,7 @@ const BusinessController = {
       })
       res.status(200).json({ success: true, business })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
   query: async (req: Request, res: Response, next: Function) => {
@@ -33,7 +33,7 @@ const BusinessController = {
       const business = await BusinessRepo.query(_query)
       res.status(200).json({ success: true, business })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
 }

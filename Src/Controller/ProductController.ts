@@ -6,7 +6,7 @@ const ProductController = {
       const product = await ProductRepo.create(req.body)
       res.status(200).json({ success: true, product })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
   update: async (req: Request, res: Response, next: Function) => {
@@ -16,7 +16,7 @@ const ProductController = {
       })
       res.status(200).json({ success: true, product })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
   delete: async (req: Request, res: Response, next: Function) => {
@@ -26,7 +26,7 @@ const ProductController = {
       const product = await ProductRepo.delete({ _id, createdBy })
       res.status(200).json({ success: true, product })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
   query: async (req: Request, res: Response, next: Function) => {
@@ -34,7 +34,7 @@ const ProductController = {
       const product = await ProductRepo.query(req.query)
       res.status(200).json({ success: true, product })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
 }

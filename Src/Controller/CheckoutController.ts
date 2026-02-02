@@ -16,7 +16,7 @@ const CheckoutController = {
       })
       res.status(200).json({ success: true, checkout })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
 }

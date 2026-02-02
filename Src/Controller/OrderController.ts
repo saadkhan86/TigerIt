@@ -10,7 +10,7 @@ const OrderController = {
       })
       res.status(200).json({ success: true, order })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
   query: async (req: Request, res: Response, next: Function) => {
@@ -18,7 +18,7 @@ const OrderController = {
       const order = await OrderRepo.query(req.query)
       res.status(200).json({ success: true, order })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
 }

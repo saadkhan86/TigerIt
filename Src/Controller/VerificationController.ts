@@ -10,7 +10,7 @@ const VerificationController = {
       })
       res.status(200).json({ success: true, verification })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
   userVerificationUpdate: async (
@@ -22,7 +22,7 @@ const VerificationController = {
       const user = await VerificationRepo.userVerificationUpdate(req.body)
       res.status(200).json({ success: true, user })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
   businessVerificationUpdate: async (
@@ -36,7 +36,7 @@ const VerificationController = {
       )
       res.status(200).json({ success: true, business })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
   userVerificationQuery: async (
@@ -50,7 +50,7 @@ const VerificationController = {
       })
       res.status(200).json({ success: true, users })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
   businessVerificationQuery: async (
@@ -62,7 +62,7 @@ const VerificationController = {
       const business = await BusinessRepo.query({ ...req.query })
       res.status(200).json({ success: true, business })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
 }

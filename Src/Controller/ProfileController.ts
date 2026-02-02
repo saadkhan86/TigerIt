@@ -12,7 +12,7 @@ const ProfileController = {
       const profile = await ProfileRepo.update(req.user?._id!, data)
       res.status(200).json({ success: true, profile: profile })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
 }

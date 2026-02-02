@@ -6,7 +6,7 @@ const WalletController = {
       const wallet = await WalletRepo.query(req.params._id as string)
       res.status(200).json({ success: true, wallet })
     } catch (error) {
-      next(req, res, error)
+      next(error, req, res)
     }
   },
 }
