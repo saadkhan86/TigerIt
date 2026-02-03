@@ -7,7 +7,7 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
-app.use(Router)
+app.use("/api/v1",Router)
 
 app.use((error: any, req: Request, res: Response, next: Function) => {
   if (error instanceof mongoose.MongooseError) {
