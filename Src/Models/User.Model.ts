@@ -15,6 +15,10 @@ const UserSchema = new Schema<IUser.Doc>(
       unique: true,
       required: [true, 'Firebase User Id required'],
     },
+    stripeCustomerId: {
+      type: String,
+      unique: true,
+    },
     name: {
       type: String,
     },

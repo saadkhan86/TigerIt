@@ -7,7 +7,7 @@ export namespace ICheckout {
     quantity: number
   }
 
-  export interface create {
+  export interface Create {
     customerId: Types.ObjectId | string
     tip?: number
     serviceFee: number

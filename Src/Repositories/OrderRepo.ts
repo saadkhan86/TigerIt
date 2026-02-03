@@ -3,6 +3,7 @@ import ErrorHandler from '../ErrorHandler/ErrorHandler'
 import { IOrder } from '../Interfaces/IOrder'
 import OrderModel from '../Models/Order.Model'
 import ProductModel from '../Models/Product.Model'
+import GeoCodeRepo from './GeoCodeRepo'
 
 class OrderRepo {
   public async create(data: IOrder.Create) {
@@ -23,7 +24,6 @@ class OrderRepo {
       const price = variant.price.amount
       totalAmount += price * item.quantity
     }
-    totalAmount += data.tip || 0
     let serviceFee: 3.44 | 5.44 | 8
     if (totalAmount < 9) {
       serviceFee = 3.44
@@ -35,6 +35,12 @@ class OrderRepo {
       serviceFee = 8
       totalAmount += serviceFee
     }
+    const distance = await GeoCodeRepo.getRoadDistance(data.pickupPlaceId, data.deliveryPlaceId)
+    if (distance > 3) {
+      data.deliveryFee = 0
+    }
+    totalAmount += data.deliveryFee
+    totalAmount += data.tip || 0
     const order = await OrderModel.create({
       customerRef: data.customerRef,
       items: data.items,

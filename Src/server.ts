@@ -21,8 +21,8 @@ app.use((error: any, req: Request, res: Response, next: Function) => {
 })
 Connection()
   .then(() => {
-    app.listen(process.env.PORT, () => {
-      console.log(`Server is listening on port ${process.env.PORT}`)
+    app.listen(8080, () => {
+      console.log(`Server is listening on port 8080`)
     })
   })
   .catch((error) => {

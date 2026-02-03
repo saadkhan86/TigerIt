@@ -2,9 +2,11 @@ import ProductModel from '../Models/Product.Model'
 import ICheckout from '../Interfaces/ICheckout'
 import WalletRepo from './WalletRepo'
 import ErrorHandler from '../ErrorHandler/ErrorHandler'
+import GeoCodeController from '../Controller/GeoCodeController'
+import GeoCodeRepo from './GeoCodeRepo'
 
 class CheckoutRepo {
-  public async create(data: ICheckout.create) {
+  public async create(data: ICheckout.Create) {
     let totalCheckoutAmount = 0
     const productIds = data.items.map((item) => item.product)
     const products = await ProductModel.find({
@@ -26,8 +28,10 @@ class CheckoutRepo {
 
       totalCheckoutAmount += price * item.quantity
     }
-    totalCheckoutAmount += data.deliveryFee
-    totalCheckoutAmount += data.tip || 0
+    const deliveryDistance = await GeoCodeRepo.getRoadDistance(data.pickupPlaceId, data.deliveryPlaceId)
+    if (deliveryDistance > 3) {
+      totalCheckoutAmount += data.deliveryFee
+    }
     let serviceFee: 3.44 | 5.44 | 8
     if (totalCheckoutAmount < 9) {
       serviceFee = 3.44
@@ -39,6 +43,8 @@ class CheckoutRepo {
       serviceFee = 8
       totalCheckoutAmount += serviceFee
     }
+    totalCheckoutAmount += data.tip || 0
+
     const walletData = await WalletRepo.query(data.customerId)
 
     const userWalletAmount = walletData.wallet.balance.amount

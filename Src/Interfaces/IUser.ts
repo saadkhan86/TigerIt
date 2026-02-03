@@ -4,6 +4,7 @@ export namespace IUser {
   export interface Doc extends Document {
     phone: string
     firebaseId: string
+    stripeCustomerId: string
     name: string
     email: string
     gender: 'male' | 'female' | 'personal'
