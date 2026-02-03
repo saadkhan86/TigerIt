@@ -1,4 +1,5 @@
 import ErrorHandler from "../ErrorHandler/ErrorHandler"
+import axios from 'axios'
 
 class GeoCodeRepo {
     public async getRoadDistance(pickupPlaceId: string, dropPlaceId: string) {

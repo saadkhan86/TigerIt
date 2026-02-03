@@ -9,9 +9,9 @@ import WishlistRouter from './WishlistRouter'
 import CheckoutRouter from './CheckoutRouter'
 import OrderRouter from './OrderRouter'
 const Router = express.Router()
-Router.use('/profile', ProfileRouter)
-Router.use('/business', BusinessRouter)
-Router.use('/wallet', WalletRouter)
+Router.use('/profile', ProfileRouter)//checked
+Router.use('/business', BusinessRouter)//checked
+Router.use('/wallet', WalletRouter)//checked
 Router.use('/product', ProductRouter)
 Router.use('/wishlist', WishlistRouter)
 Router.use('/checkout', CheckoutRouter)

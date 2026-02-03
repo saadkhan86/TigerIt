@@ -12,6 +12,7 @@ export namespace IWishlist {
   export interface Query {
     userRef?: Types.ObjectId | string
     businessRef?: Types.ObjectId | string
+    _id?: Types.ObjectId | string
     limit?: number
     page?: number
   }

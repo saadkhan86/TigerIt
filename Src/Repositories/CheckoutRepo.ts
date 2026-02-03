@@ -24,13 +24,26 @@ class CheckoutRepo {
       )
       if (!variant) throw new Error('Variant not found')
 
+      if (item.quantity <= 0) throw new Error('Quantity must be greater than 0')
+
       const price = variant.price.amount
 
       totalCheckoutAmount += price * item.quantity
     }
+
+    // Verify all products belong to same business
+    if (products.length > 0) {
+      const firstBusiness = products[0].createdBy.toString()
+      const differentBusinessProduct = products.find(p => p.createdBy.toString() !== firstBusiness)
+      if (differentBusinessProduct) {
+        throw new Error('All items must be from the same business')
+      }
+    }
     const deliveryDistance = await GeoCodeRepo.getRoadDistance(data.pickupPlaceId, data.deliveryPlaceId)
-    if (deliveryDistance > 3) {
+    if (data.deliveryFee && deliveryDistance > 3) {
       totalCheckoutAmount += data.deliveryFee
+    } else {
+      totalCheckoutAmount += 20
     }
     let serviceFee: 3.44 | 5.44 | 8
     if (totalCheckoutAmount < 9) {

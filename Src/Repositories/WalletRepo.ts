@@ -1,6 +1,4 @@
 import { Types } from 'mongoose'
-import IWishlist from '../Interfaces/IWishlist'
-import WishlistModel from '../Models/WishList.Model'
 import UserModel from '../Models/User.Model'
 import ErrorHandler from '../ErrorHandler/ErrorHandler'
 

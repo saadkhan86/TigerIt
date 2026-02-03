@@ -28,6 +28,7 @@ export namespace IUser {
     email?: string
     gender?: 'male' | 'female' | 'personal'
     DOB?: Date
+    deliveryAddress?: string
     profileImage?: string
   }
   export interface Query {

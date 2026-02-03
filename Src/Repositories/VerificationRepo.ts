@@ -1,21 +1,19 @@
 import { QueryFilter, Types } from 'mongoose'
 import IVerification from '../Interfaces/IVerification'
 import VerificationModel from '../Models/Verification.Model'
-import IBusiness from '../Interfaces/IBusiness'
 import BusinessModel from '../Models/Business.Model'
-import { IUser } from '../Interfaces/IUser'
 
 class VerificationRepo {
   public async userVerificationCreate(data: IVerification.Create) {
-    const verification = await VerificationModel.create(data)
-    return verification
+    const verification = new VerificationModel(data)
+    return await verification.save()
   }
   public async userVerificationUpdate(data: {
     verificationId: Types.ObjectId | string
     approvalStatus: 'approved' | 'rejected'
   }) {
     const verification = await VerificationModel.findByIdAndUpdate(
-      data.verificationId,
+      new Types.ObjectId(data.verificationId),
       { approvalStatus: data.approvalStatus },
     )
     return verification
@@ -24,9 +22,9 @@ class VerificationRepo {
     businessId: Types.ObjectId | string
     approvalStatus: 'accepted' | 'rejected'
   }) {
-    const business = await BusinessModel.findByIdAndUpdate(data.businessId, {
+    const business = await BusinessModel.findByIdAndUpdate(new Types.ObjectId(data.businessId), {
       approvalStatus: data.approvalStatus,
-    })
+    }, { new: true }).lean()
     return business
   }
   public async userVerificationQuery(data: IVerification.Query) {
@@ -38,11 +36,11 @@ class VerificationRepo {
     if (data.verificationStatus) {
       _query.verificationStatus = data.verificationStatus
     }
-    if (data.userRef) {
-      _query.userRef = data.userRef
+    if (data.userId) {
+      _query.userRef = new Types.ObjectId(data.userId)
     }
     if (data._id) {
-      _query._id = data._id
+      _query._id = new Types.ObjectId(data._id)
     }
     const verification = await VerificationModel.find(_query)
       .sort({ createdAt: -1 })

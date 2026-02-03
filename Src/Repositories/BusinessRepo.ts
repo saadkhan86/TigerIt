@@ -41,6 +41,7 @@ class BusinessRepo {
     if (data.businessDescription) {
       business.businessDescription = data.businessDescription
     }
+    business.approvalStatus = 'pending'
     return await business.save()
   }
   public async query(data: IBusiness.Query) {
@@ -62,9 +63,10 @@ class BusinessRepo {
       _query.approvalStatus = data.approvalStatus
     }
     const business = await BusinessModel.find(_query)
-      .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit)
+      .sort({ createdAt: -1 })
+      .lean()
     return business
   }
 }

@@ -1,7 +1,6 @@
 import { QueryFilter } from 'mongoose'
-import IBusiness from '../Interfaces/IBusiness'
 import IWishlist from '../Interfaces/IWishlist'
-import WishlistModel from '../Models/WishList.Model'
+import WishlistModel from '../Models/Wishlist.Model'
 
 class WishlistRepo {
   public async create(data: IWishlist.General) {
@@ -20,12 +19,15 @@ class WishlistRepo {
   }
   public async query(data: IWishlist.Query) {
     const _query: QueryFilter<IWishlist.Doc> = {}
-    const { page = 0, limit = 10 } = data
+    const { page = 1, limit = 10 } = data
     if (data.userRef) {
       _query.userRef = data.userRef
     }
     if (data.businessRef) {
       _query.businessRef = data.businessRef
+    }
+    if (data._id) {
+      _query._id = data._id
     }
     const wishlist = await WishlistModel.find(_query)
       .sort({ createdAt: -1 })

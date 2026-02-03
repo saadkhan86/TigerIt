@@ -16,7 +16,7 @@ export namespace IVerification {
   }
   export interface Query {
     _id?: Types.ObjectId | string
-    userRef?: Types.ObjectId | string
+    userId?: Types.ObjectId | string
     documentType?: 'passport' | 'driverLicense' | 'nationalId'
     verificationStatus?: 'pending' | 'accepted' | 'rejected'
     limit?: number

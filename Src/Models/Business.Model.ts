@@ -3,10 +3,6 @@ import IBusiness from '../Interfaces/IBusiness'
 const Schema = mongoose.Schema
 const BusinessSchema = new Schema<IBusiness.Doc>(
   {
-    approvalStatus: {
-      type: String,
-      enum: ['pending', 'approved', 'rejected'],
-    },
     ownerRef: {
       type: Types.ObjectId,
       required: [true, 'User Id required for creating business'],
@@ -15,6 +11,11 @@ const BusinessSchema = new Schema<IBusiness.Doc>(
     businessTitle: {
       type: String,
       required: true,
+    },
+    approvalStatus: {
+      type: String,
+      enum: ['pending', 'approved', 'rejected'],
+      default: 'pending',
     },
     businessDescription: {
       type: String,

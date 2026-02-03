@@ -3,7 +3,7 @@ import UserModel from '../Models/User.Model'
 import { IUser } from '../Interfaces/IUser'
 
 class ProfileRepo {
-  public async update(userId: Types.ObjectId | string, data: any) {
+  public async update(userId: Types.ObjectId | string, data: IUser.Update) {
     let updatedProfile: any = {}
     if (data.name) {
       updatedProfile.name = data.name
@@ -42,10 +42,11 @@ class ProfileRepo {
       _query._id = data.userId
     }
     const users = await UserModel.find(_query)
-      .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit)
+      .sort({ createdAt: -1 })
       .lean()
+    return users
   }
 }
 export default new ProfileRepo()

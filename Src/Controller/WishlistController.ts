@@ -7,7 +7,7 @@ const WishlistController = {
     try {
       const wishlist = await WishlistRepo.create({
         userRef: req.user?._id!,
-        businessRef: req.params.id as string,
+        businessRef: req.body.businessId as string,
       })
       res.status(200).json({ success: true, wishlist })
     } catch (error) {

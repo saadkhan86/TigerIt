@@ -1,15 +1,12 @@
 import { QueryFilter, Types } from 'mongoose'
 import IProduct from '../Interfaces/IProduct'
 import ProductModel from '../Models/Product.Model'
-import BusinessRepo from './BusinessRepo'
-import IBusiness from '../Interfaces/IBusiness'
 import ErrorHandler from '../ErrorHandler/ErrorHandler'
+import BusinessModel from '../Models/Business.Model'
 
 class ProductRepo {
   public async create(data: IProduct.Create) {
-    const business: QueryFilter<IBusiness.Doc> = await BusinessRepo.query({
-      businessId: data.createdBy,
-    })
+    const business = await BusinessModel.findById(data.createdBy)
     if (!business || business.approvalStatus === 'pending') {
       throw new ErrorHandler(
         404,

@@ -14,6 +14,7 @@ export namespace IBusiness {
   }
   export interface Create {
     ownerRef: Types.ObjectId | string
+    approvalStatus: 'pending' | 'approved' | 'rejected'
     businessTitle: string
     businessDescription: string
     businessEmail: string
