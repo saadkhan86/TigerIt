@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import ProfileRepo from '../Repositories/ProfileRepo'
 import BusinessRepo from '../Repositories/BusinessRepo'
 import VerificationRepo from '../Repositories/VerificationRepo'
 const VerificationController = {
@@ -22,7 +21,7 @@ const VerificationController = {
     next: Function,
   ) => {
     try {
-      const user = await VerificationRepo.userVerificationUpdate({ verificationId: req.params.id, ...req.body })
+      const user = await VerificationRepo.userVerificationUpdate({ verificationId: req.params.id as string, ...req.body })
       res.status(200).json({ success: true, user })
     } catch (error) {
       next(error, req, res)

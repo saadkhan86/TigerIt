@@ -4,21 +4,21 @@ export namespace ITransaction {
     export interface IPaymentIntent {
         amount: number
         currency: string
-        payment_method: string
-        customer: string
-        description: string
-        statement_descriptor_suffix: string
+        payment_method: string | any | null
+        customer: string | any | null
+        description: string | null
+        statement_descriptor_suffix: string | null
         automatic_payment_methods: {
             enabled: boolean
-            allow_redirects: string
-        }
+            allow_redirects?: string
+        } | null
         metadata: {
             userId: string
             isPickup: boolean
             orderId: string
-        }
+        } | any | null
 
-        client_secret?: string
+        client_secret?: string | null
     }
     export interface Doc extends Document {
         userRef: Types.ObjectId | string
@@ -41,8 +41,8 @@ export namespace ITransaction {
         currency: string
     }
     export interface Query {
-        _id?: Types.ObjectId | string
         userId?: Types.ObjectId | string
+        _id?: Types.ObjectId | string
         orderId?: Types.ObjectId | string
         isPickup?: boolean
         paymentMethod?: "wallet" | "card"

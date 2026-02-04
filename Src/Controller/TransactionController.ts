@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import stripeAuthentication from "../Middlewares/stripeAuthentication";
 import stripe from "../Config/Stripe";
 import ITransaction from "../Interfaces/ITransaction";
+import TransactionRepo from "../Repositories/TransactionRepo";
 
 const TransactionController = {
     createCardIntent: async (req: Request, res: Response, next: Function) => {
@@ -26,7 +27,7 @@ const TransactionController = {
         }
     }, deleteCard: async (req: Request, res: Response, next: Function) => {
         try {
-            const remove = await stripe.paymentMethods.detach(req.params.id!)
+            const remove = await stripe.paymentMethods.detach(req.params.id as string)
             res.status(200).json({ success: true, remove })
         } catch (error) {
             next(error, req, res)
@@ -46,7 +47,7 @@ const TransactionController = {
                     allow_redirects: "never",
                 },
                 metadata: {
-                    userId: req.user!._id,
+                    userId: req.user!._id.toString(),
                     isPickup: req.body.isPickup || false,
                     orderId: req.body.orderId || null
                 }
@@ -58,18 +59,19 @@ const TransactionController = {
         }
     }, webhook: async (req: Request, res: Response) => {
         try {
-
+            //pending
             res.status(200).json({ succesS: true })
         } catch (error) {
 
         }
-    }, query: async (req: Request, res: Response) => {
+    }, query: async (req: Request, res: Response, next: Function) => {
         try {
-            const query: ITransaction.Query = req.query
-            const transactions=await
-            res.status(200).json({ succesS: true })
+            let query: ITransaction.Query = req.query
+            query.userId = req.user!._id
+            const transactions = await TransactionRepo.query(query)
+            res.status(200).json({ succesS: true, transactions })
         } catch (error) {
-
+            next(error, req, res)
         }
     }
 }
