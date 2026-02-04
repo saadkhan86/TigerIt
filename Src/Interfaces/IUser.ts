@@ -17,6 +17,7 @@ export namespace IUser {
         currency: string
       }
     }
+    deliveryAddress: string
   }
   export interface Create {
     phone: string

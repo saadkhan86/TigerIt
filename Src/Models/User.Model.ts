@@ -52,7 +52,9 @@ const UserSchema = new Schema<IUser.Doc>(
           default: '$',
         },
       },
-    },
+    }, deliveryAddress: {
+      type: String
+    }
   },
   { timestamps: true },
 )

@@ -3,7 +3,13 @@ import ProductRepo from '../Repositories/ProductRepo'
 const ProductController = {
   create: async (req: Request, res: Response, next: Function) => {
     try {
-      const product = await ProductRepo.create(req.body)
+      const product = await ProductRepo.create({
+        createdBy: req.body.businessId,
+        description: req.body.description,
+        forAdult: req.body.forAdult,
+        variants: req.body.variants,
+        image: req.body.image,
+      })
       res.status(200).json({ success: true, product })
     } catch (error) {
       next(error, req, res)
@@ -12,7 +18,11 @@ const ProductController = {
   update: async (req: Request, res: Response, next: Function) => {
     try {
       const product = await ProductRepo.update(req.params.id as string, {
-        ...req.body,
+        createdBy: req.body.businessId,
+        description: req.body.description,
+        forAdult: req.body.forAdult,
+        variants: req.body.variants,
+        image: req.body.image,
       })
       res.status(200).json({ success: true, product })
     } catch (error) {

@@ -1,12 +1,25 @@
 import { QueryFilter, Types } from 'mongoose'
-import UserModel from '../Models/User.Model'
 import IBusiness from '../Interfaces/IBusiness'
 import BusinessModel from '../Models/Business.Model'
 import ErrorHandler from '../ErrorHandler/ErrorHandler'
+import ValidatorUtils from '../Utils/ValidatorUtils'
 
 class BusinessRepo {
   public async create(data: IBusiness.Create) {
-    const business = await BusinessModel.create(data)
+    const coverImage = await ValidatorUtils.convertToUrl(data.businessCoverImage)
+    const profileImage = await ValidatorUtils.convertToUrl(data.businessProfileImage)
+    if (!coverImage || !profileImage) throw new ErrorHandler(500, "Error Occured While Uploading Image")
+    const business = await BusinessModel.create({
+      businessTitle: data.businessTitle,
+      approvalStatus: 'pending',
+      businessEmail: data.businessEmail,
+      businessAddress: data.businessAddress,
+      businessPhone: data.businessPhone,
+      businessCoverImage: coverImage,
+      businessProfileImage: profileImage,
+      businessDescription: data.businessDescription,
+      ownerRef: data.ownerRef,
+    })
     return business
   }
   public async update(
@@ -33,15 +46,18 @@ class BusinessRepo {
       business.businessPhone = data.businessPhone
     }
     if (data.businessCoverImage) {
-      business.businessCoverImage = data.businessCoverImage
+      const coverImage = await ValidatorUtils.convertToUrl(data.businessCoverImage)
+      if (coverImage) business.businessCoverImage = coverImage
+      else console.log('Error occured while uploading image')
     }
     if (data.businessProfileImage) {
-      business.businessProfileImage = data.businessProfileImage
+      const profileImage = await ValidatorUtils.convertToUrl(data.businessProfileImage)
+      if (profileImage) business.businessProfileImage = profileImage
+      else console.log('Error occured while uploading image')
     }
     if (data.businessDescription) {
       business.businessDescription = data.businessDescription
     }
-    business.approvalStatus = 'pending'
     return await business.save()
   }
   public async query(data: IBusiness.Query) {

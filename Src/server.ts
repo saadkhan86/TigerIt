@@ -1,30 +1,25 @@
-import mongoose from 'mongoose'
 import Connection from './Config/Database'
 import Router from './Routes/Router'
 import cors from 'cors'
-import express, { Request, Response } from 'express'
+import express from 'express'
+import { globalErrorHandler } from './Middlewares/ErrorHandler'
+import env from "dotenv"
+env.config()
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
-app.use("/api/v1",Router)
 
-app.use((error: any, req: Request, res: Response, next: Function) => {
-  if (error instanceof mongoose.MongooseError) {
-    return res
-      .status(500)
-      .json({ success: false, message: error.message.split('.')[0] })
-  }
-  const status = error.status || 500
-  const message = error.message || 'server error'
-  return res.status(status).json({ success: false, message })
-})
+app.use('/api/v1', Router)
+
+app.use(globalErrorHandler)
+
 Connection()
   .then(() => {
-    app.listen(8080, () => {
-      console.log(`Server is listening on port 8080`)
+    app.listen(process.env.PORT, () => {
+      console.log(`Server is listening on port ${process.env.PORT}`)
     })
   })
   .catch((error) => {
-    console.log(error.message)
+    console.error(error.message)
   })

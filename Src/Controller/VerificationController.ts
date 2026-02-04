@@ -7,7 +7,9 @@ const VerificationController = {
     try {
       const verification = await VerificationRepo.userVerificationCreate({
         userRef: req.user!._id,
-        ...req.body,
+        documentType: req.body.documentType,
+        docFrontImage: req.body.docFrontImage,
+        docBackImage: req.body.docBackImage,
       })
       res.status(200).json({ success: true, verification })
     } catch (error) {

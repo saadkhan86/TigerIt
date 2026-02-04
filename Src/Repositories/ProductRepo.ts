@@ -3,6 +3,7 @@ import IProduct from '../Interfaces/IProduct'
 import ProductModel from '../Models/Product.Model'
 import ErrorHandler from '../ErrorHandler/ErrorHandler'
 import BusinessModel from '../Models/Business.Model'
+import ValidatorUtils from '../Utils/ValidatorUtils'
 
 class ProductRepo {
   public async create(data: IProduct.Create) {
@@ -13,7 +14,15 @@ class ProductRepo {
         'Either business not approved yet or business not found',
       )
     }
-    const product = await ProductModel.create(data)
+    const image = await ValidatorUtils.convertToUrl(data.image)
+    if (!image) throw new ErrorHandler(500, "Error Occured While Uploading Image")
+    const product = await ProductModel.create({
+      createdBy: data.createdBy,
+      description: data.description,
+      forAdult: data.forAdult,
+      variants: data.variants,
+      image: image,
+    })
     return product
   }
   public async update(
@@ -24,7 +33,8 @@ class ProductRepo {
       _id: productId,
       createdBy: data.createdBy,
     })
-    if (!product) return null
+    if (!product)
+      throw new ErrorHandler(404, "Product not found")
     if (data.description) {
       product.description = data.description
     }
@@ -32,7 +42,9 @@ class ProductRepo {
       product.forAdult = data.forAdult
     }
     if (data.image) {
-      product.image = data.image
+      const image = await ValidatorUtils.convertToUrl(data.image)
+      if (image) product.image = image
+      else console.log('Error occured while uploading image')
     }
     if (data.variants) {
       product.variants = data.variants

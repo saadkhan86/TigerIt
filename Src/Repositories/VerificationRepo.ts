@@ -2,10 +2,27 @@ import { QueryFilter, Types } from 'mongoose'
 import IVerification from '../Interfaces/IVerification'
 import VerificationModel from '../Models/Verification.Model'
 import BusinessModel from '../Models/Business.Model'
+import ProfileRepo from './ProfileRepo'
+import ErrorHandler from '../ErrorHandler/ErrorHandler'
+import ValidatorUtils from '../Utils/ValidatorUtils'
 
 class VerificationRepo {
   public async userVerificationCreate(data: IVerification.Create) {
-    const verification = new VerificationModel(data)
+    let verification = await VerificationModel.findOne({
+      userRef: data.userRef,
+    })
+    if (verification && (verification.verificationStatus === "pending" || verification.verificationStatus === "accepted")) throw new ErrorHandler(400, `Verification already ${verification.verificationStatus}`)
+    const docFrontImage = await ValidatorUtils.convertToUrl(data.docFrontImage)
+    if (!docFrontImage) throw new ErrorHandler(500, "Error Occured While Uploading Image")
+    const docBackImage = await ValidatorUtils.convertToUrl(data.docBackImage)
+    if (!docBackImage) throw new ErrorHandler(500, "Error Occured While Uploading Image")
+    verification = new VerificationModel({
+      userRef: data.userRef,
+      documentType: data.documentType,
+      docFrontImage,
+      docBackImage,
+      verificationStatus: "pending"
+    })
     return await verification.save()
   }
   public async userVerificationUpdate(data: {
@@ -14,8 +31,13 @@ class VerificationRepo {
   }) {
     const verification = await VerificationModel.findByIdAndUpdate(
       new Types.ObjectId(data.verificationId),
-      { approvalStatus: data.approvalStatus },
-    )
+      { verificationStatus: data.approvalStatus },
+      { new: true }
+    ).lean()
+    if (!verification) throw new ErrorHandler(404, "Verification Not Found")
+    await ProfileRepo.update(verification.userRef!, {
+      verificationStatus: data.approvalStatus,
+    })
     return verification
   }
   public async businessVerificationUpdate(data: {

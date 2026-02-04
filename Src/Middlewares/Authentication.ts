@@ -5,29 +5,36 @@ import UserModel from '../Models/User.Model'
 const Authentication = {
   userAuth: async (req: Request, res: Response, next: Function) => {
     try {
-      var token: string | null = null
-      // if (
-      //   req.headers.authorization &&
-      //   req.headers.authorization.startsWith('Bearer')
-      // ) {
-      //   token = req.headers.authorization.split(' ')[1]
-      // }
-      // if (!token || token === undefined) {
-      //   res.status(401).json({ success: false, message: 'Unauthorized' })
-      // }
-      // const decoded = await Admin.auth().verifyIdToken(token!)
-      // if (!decoded) {
-      //   res
-      //     .status(401)
-      //     .json({ success: false, message: 'Invalid Token Provided' })
-      // }
-      var user = await UserModel.findOne({ phone: "+923297681247" })
+      let token: string | null = null
+
+      if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+      ) {
+        token = req.headers.authorization.split(' ')[1]
+      }
+
+      if (!token) {
+        return res.status(401).json({ success: false, message: 'Unauthorized' })
+      }
+
+      const decoded = await Admin.auth().verifyIdToken(token)
+      if (!decoded) {
+        return res
+          .status(401)
+          .json({ success: false, message: 'Invalid Token Provided' })
+      }
+
+      let user = await UserModel.findOne({ firebaseId: decoded.uid })
+
       if (!user) {
+        // Optimistically create user if they don't exist yet but have a valid token
         user = await UserModel.create({
-          phone: "+923297681247",
-          firebaseId: "123456789",
+          phone: decoded.phone_number || '', // Firebase token often contains phone
+          firebaseId: decoded.uid,
         })
       }
+
       req.user = user
       return next()
     } catch (error: any) {
