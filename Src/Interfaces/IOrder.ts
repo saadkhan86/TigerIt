@@ -23,8 +23,8 @@ export namespace IOrder {
     customerRef: Types.ObjectId | string
     paymentMethod: 'card' | 'wallet'
     tip: number
-    serviceFee: number
-    deliveryFee: number
+    serviceFee?: 3.44 | 5.44 | 8
+    deliveryFee?: number
     pickupPlaceId: string
     deliveryPlaceId: string
     items: Item[]

@@ -28,7 +28,7 @@ const WishlistController = {
   query: async (req: Request, res: Response, next: Function) => {
     try {
       const _query: IWishlist.Query = req.query
-      const wishlist = await WishlistRepo.query(_query)
+      const wishlist = await WishlistRepo.query(req.user!._id, _query)
       res.status(200).json({ success: true, wishlist })
     } catch (error) {
       next(error, req, res)

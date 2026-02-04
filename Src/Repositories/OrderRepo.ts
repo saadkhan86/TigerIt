@@ -7,38 +7,40 @@ import GeoCodeRepo from './GeoCodeRepo'
 
 class OrderRepo {
   public async create(data: IOrder.Create) {
+    console.log(data)
     let totalAmount = 0
     const productIds = data.items.map((item) => item.product)
     const products = await ProductModel.find({
       _id: { $in: productIds },
     })
     for (const item of data.items) {
-      const product = products.find((p) => {
-        p._id.toString() === item.product.toString()
-      })
+      const product = products.find((p) => p._id.toString() === item.product.toString())
       if (!product) throw new ErrorHandler(404, 'product not found')
-      const variant = product.variants.find((v) => {
-        v._id.toString() === item.variant.toString()
-      })
-      if (!variant) throw new Error('Variant not found')
+      const variant = product.variants.find((v) => v._id.toString() === item.variant.toString())
+      if (!variant) throw new ErrorHandler(404, 'Variant not found')
       const price = variant.price.amount
+
       totalAmount += price * item.quantity
     }
     let serviceFee: 3.44 | 5.44 | 8
     if (totalAmount < 9) {
       serviceFee = 3.44
+      data.serviceFee = serviceFee
       totalAmount += serviceFee
     } else if (totalAmount < 19) {
       serviceFee = 5.44
+      data.serviceFee = serviceFee
       totalAmount += serviceFee
     } else {
       serviceFee = 8
+      data.serviceFee = serviceFee
       totalAmount += serviceFee
     }
-    const distance = await GeoCodeRepo.getRoadDistance(data.pickupPlaceId, data.deliveryPlaceId)
-    if (distance > 3) {
-      data.deliveryFee = 0
-    }
+    // const distance = await GeoCodeRepo.getRoadDistance(data.pickupPlaceId, data.deliveryPlaceId)
+    // if (distance > 3) {
+    //   data.deliveryFee = 0
+    // }
+    data.deliveryFee = 10
     totalAmount += data.deliveryFee
     totalAmount += data.tip || 0
     const order = await OrderModel.create({

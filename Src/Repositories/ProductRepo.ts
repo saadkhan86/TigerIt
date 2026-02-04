@@ -49,8 +49,8 @@ class ProductRepo {
   public async query(data: IProduct.Query) {
     let _query: QueryFilter<IProduct.Doc> = {}
     const { page = 1, limit = 10 } = data
-    if (data._id) {
-      _query._id = data._id
+    if (data.productId) {
+      _query._id = data.productId
     }
     if (data.createdBy) {
       _query.createdBy = data.createdBy

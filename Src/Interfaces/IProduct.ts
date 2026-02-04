@@ -36,7 +36,7 @@ export namespace IProduct {
   }
   export interface Query {
     createdBy?: Types.ObjectId | string
-    _id?: Types.ObjectId | string
+    productId?: Types.ObjectId | string
     description?: string
     limit?: number
     page?: number

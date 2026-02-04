@@ -12,10 +12,10 @@ const Router = express.Router()
 Router.use('/profile', ProfileRouter)//checked
 Router.use('/business', BusinessRouter)//checked
 Router.use('/wallet', WalletRouter)//checked
-Router.use('/product', ProductRouter)
-Router.use('/wishlist', WishlistRouter)
-Router.use('/checkout', CheckoutRouter)
-Router.use('/order', OrderRouter)
-Router.use('/verification/user', UserVerificationRouter)
-Router.use('/verification/admin', AdminVerificationRouter)
+Router.use('/product', ProductRouter)//checked
+Router.use('/wishlist', WishlistRouter)//checked
+Router.use('/checkout', CheckoutRouter)//checked
+Router.use('/order', OrderRouter)//checked
+Router.use('/verification/user', UserVerificationRouter)//checked
+Router.use('/verification/admin', AdminVerificationRouter)//checked
 export default Router

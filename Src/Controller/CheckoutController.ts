@@ -6,9 +6,9 @@ const CheckoutController = {
   create: async (req: Request, res: Response, next: Function) => {
     try {
       const checkout = await CheckoutRepo.create({
-        customerId: req.user!._id,
+        customerRef: new Types.ObjectId(req.user!._id),
+        paymentMethod: req.body.paymentMethod,
         tip: req.body.tip,
-        serviceFee: 0,
         pickupPlaceId: req.body.pickupPlaceId,
         deliveryPlaceId: req.body.deliveryPlaceId,
         deliveryFee: req.body.deliveryFee,

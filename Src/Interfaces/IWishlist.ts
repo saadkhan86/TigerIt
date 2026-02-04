@@ -10,9 +10,8 @@ export namespace IWishlist {
     businessRef: Types.ObjectId | string
   }
   export interface Query {
-    userRef?: Types.ObjectId | string
     businessRef?: Types.ObjectId | string
-    _id?: Types.ObjectId | string
+    wishlistId?: Types.ObjectId | string
     limit?: number
     page?: number
   }
