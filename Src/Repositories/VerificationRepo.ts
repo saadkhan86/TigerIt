@@ -11,7 +11,17 @@ class VerificationRepo {
     let verification = await VerificationModel.findOne({
       userRef: data.userRef,
     })
-    if (verification && (verification.verificationStatus === "pending" || verification.verificationStatus === "accepted")) throw new ErrorHandler(400, `Verification already ${verification.verificationStatus}`)
+    if (verification) {
+      if (verification.verificationStatus == "pending" || verification.verificationStatus == "accepted")
+        throw new ErrorHandler(400, `Verification already ${verification.verificationStatus}`)
+      else if (verification.verificationStatus == "rejected") {
+        verification.verificationStatus = "pending"
+        verification.docFrontImage = data.docFrontImage
+        verification.docBackImage = data.docBackImage
+        verification.documentType = data.documentType
+        return await verification.save()
+      }
+    }
     const docFrontImage = await ValidatorUtils.convertToUrl(data.docFrontImage)
     if (!docFrontImage) throw new ErrorHandler(500, "Error Occured While Uploading Image")
     const docBackImage = await ValidatorUtils.convertToUrl(data.docBackImage)
@@ -30,10 +40,10 @@ class VerificationRepo {
     approvalStatus: 'approved' | 'rejected'
   }) {
     const verification = await VerificationModel.findByIdAndUpdate(
-      new Types.ObjectId(data.verificationId),
+      data.verificationId,
       { verificationStatus: data.approvalStatus },
       { new: true }
-    ).lean()
+    )
     if (!verification) throw new ErrorHandler(404, "Verification Not Found")
     await ProfileRepo.update(verification.userRef!, {
       verificationStatus: data.approvalStatus,

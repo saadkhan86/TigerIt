@@ -21,6 +21,7 @@ const UserSchema = new Schema<IUser.Doc>(
     },
     name: {
       type: String,
+      default: "TigerIt User"
     },
     email: {
       type: String,

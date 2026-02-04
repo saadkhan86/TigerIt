@@ -67,7 +67,7 @@ const TransactionController = {
     }, query: async (req: Request, res: Response, next: Function) => {
         try {
             let query: ITransaction.Query = req.query
-            query.userId = req.user!._id
+            query.userId = req.user!._id.toString()
             const transactions = await TransactionRepo.query(query)
             res.status(200).json({ succesS: true, transactions })
         } catch (error) {
