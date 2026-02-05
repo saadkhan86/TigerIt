@@ -7,29 +7,26 @@ const OrderSchema = new mongoose.Schema<IOrder.Doc>(
       type: Types.ObjectId,
       ref: 'User',
       required: true,
-      items: [
-        {
-          product: {
-            type: Types.ObjectId,
-            ref: 'Product',
-            required: true,
-          },
-          title: {
-            type: String,
-            required: true,
-          },
-          price: {
-            type: Number,
-            required: true,
-          },
-          quantity: {
-            type: Number,
-            default: 1,
-            required: true,
-          },
-        },
-      ],
     },
+    items: [
+      {
+        product: {
+          type: Types.ObjectId,
+          ref: 'Product',
+          required: true,
+        },
+        variant: {
+          type: Types.ObjectId,
+          ref: 'Product.Variant',
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          default: 1,
+          required: true,
+        },
+      },
+    ],
     paymentMethod: {
       type: String,
       enum: ['wallet', 'card'],

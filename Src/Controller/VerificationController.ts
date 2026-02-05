@@ -1,15 +1,21 @@
 import { Request, Response } from 'express'
 import BusinessRepo from '../Repositories/BusinessRepo'
 import VerificationRepo from '../Repositories/VerificationRepo'
+import sendEmail from '../Services/SendEmail'
+import ErrorHandler from '../ErrorHandler/ErrorHandler'
 const VerificationController = {
   verificationCreate: async (req: Request, res: Response, next: Function) => {
     try {
       const verification = await VerificationRepo.userVerificationCreate({
         userRef: req.user!._id,
+        name: req.user!.name,
+        email: req.user!.email,
+        phone: req.user!.phone,
         documentType: req.body.documentType,
         docFrontImage: req.body.docFrontImage,
         docBackImage: req.body.docBackImage,
       })
+      await sendEmail("verification", "Document Verification", [{ userId: verification.userRef as string, email: verification.email, name: verification.name }])
       res.status(200).json({ success: true, verification })
     } catch (error) {
       next(error, req, res)

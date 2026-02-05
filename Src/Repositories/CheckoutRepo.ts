@@ -2,10 +2,9 @@ import ProductModel from '../Models/Product.Model'
 import ICheckout from '../Interfaces/ICheckout'
 import WalletRepo from './WalletRepo'
 import ErrorHandler from '../ErrorHandler/ErrorHandler'
-import { IOrder } from '../Interfaces/IOrder'
 
 class CheckoutRepo {
-  public async create(data: IOrder.Create) {
+  public async create(data: ICheckout.Create) {
     let totalCheckoutAmount = 0
     const productIds = data.items.map((item) => item.product)
     const products = await ProductModel.find({
@@ -57,9 +56,9 @@ class CheckoutRepo {
       serviceFee = 8
       totalCheckoutAmount += serviceFee
     }
-    const walletData = await WalletRepo.query(data.customerRef)
+    const walletData = await WalletRepo.query(data.customerId)
 
-    const userWalletAmount = walletData.wallet.balance.amount
+    const userWalletAmount = walletData.balance.amount
     return {
       userWalletAmount: userWalletAmount,
       totalCheckoutAmount,

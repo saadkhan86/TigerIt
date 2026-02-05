@@ -3,11 +3,9 @@ import ErrorHandler from '../ErrorHandler/ErrorHandler'
 import { IOrder } from '../Interfaces/IOrder'
 import OrderModel from '../Models/Order.Model'
 import ProductModel from '../Models/Product.Model'
-import GeoCodeRepo from './GeoCodeRepo'
 
 class OrderRepo {
   public async create(data: IOrder.Create) {
-    console.log(data)
     let totalAmount = 0
     const productIds = data.items.map((item) => item.product)
     const products = await ProductModel.find({
@@ -19,7 +17,6 @@ class OrderRepo {
       const variant = product.variants.find((v) => v._id.toString() === item.variant.toString())
       if (!variant) throw new ErrorHandler(404, 'Variant not found')
       const price = variant.price.amount
-
       totalAmount += price * item.quantity
     }
     let serviceFee: 3.44 | 5.44 | 8
@@ -79,6 +76,14 @@ class OrderRepo {
       .skip((page - 1) * limit)
       .limit(limit)
       .lean()
+    return order
+  }
+  public async GetById(id: string) {
+    const order = await OrderModel.findById(id).lean()
+    return order
+  }
+  public async Update(data: { orderId: string, paymentStatus: string }) {
+    const order = await OrderModel.findOneAndUpdate({ _id: data.orderId, paymentStatus: 'pending' }, { paymentStatus: data.paymentStatus }, { new: true })
     return order
   }
 }

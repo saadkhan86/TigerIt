@@ -12,7 +12,6 @@ class ProfileRepo {
     }
 
     const { name, email, verificationStatus, deliveryAddress, gender, DOB, profileImage } = data
-
     if (name) userProfile.name = name
     if (email) userProfile.email = email
     if (verificationStatus) userProfile.verificationStatus = verificationStatus

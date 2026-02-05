@@ -1,7 +1,7 @@
 import { Error } from 'mongoose'
 
 class ErrorHandler extends Error {
-  status: any
+  status: number
   constructor(status: number, message: string) {
     super(message)
     this.status = status

@@ -23,14 +23,6 @@ const TransactionSchema = new Schema<ITransaction.Doc>(
       enum: ['topup', 'purchase'],
       required: true,
     },
-    paymentMethod: {
-      type: String,
-      enum: ['wallet', 'card'],
-    },
-    isPickup: {
-      type: Boolean,
-      default: false,
-    },
     amount: {
       type: Number,
       required: true,

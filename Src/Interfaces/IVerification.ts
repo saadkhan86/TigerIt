@@ -3,6 +3,9 @@ import { Document, Types } from 'mongoose'
 export namespace IVerification {
   export interface Doc extends Document {
     userRef: Types.ObjectId | string
+    name: string
+    email: string
+    phone: string
     documentType: 'passport' | 'driverLicense' | 'nationalId'
     verificationStatus: 'pending' | 'accepted' | 'rejected'
     docFrontImage: string
@@ -10,6 +13,9 @@ export namespace IVerification {
   }
   export interface Create {
     userRef: Types.ObjectId | string
+    name: string
+    email: string
+    phone: string
     documentType: 'passport' | 'driverLicense' | 'nationalId'
     docFrontImage: string
     docBackImage: string

@@ -10,7 +10,7 @@ const stripeAuthentication = async (user: IUser.Doc) => {
         name: user.name,
         phone: user.phone,
         metadata: {
-            userId: user._id
+            userId: user._id.toString()
         }
     })
     user.stripeCustomerId = customer.id

@@ -8,6 +8,18 @@ const VerificationSchema = new mongoose.Schema<IVerification.Doc>(
       type: Types.ObjectId,
       required: [true, 'user required for verification'],
     },
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
     verificationStatus: {
       type: String,
       enum: ['pending', 'accepted', 'rejected'],

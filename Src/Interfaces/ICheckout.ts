@@ -8,12 +8,12 @@ export namespace ICheckout {
   }
 
   export interface Create {
-    customerId: Types.ObjectId | string
+    customerId: string | Types.ObjectId
     tip?: number
-    serviceFee: number
+    serviceFee?: number
     pickupPlaceId: string
     deliveryPlaceId: string
-    deliveryFee: number
+    deliveryFee?: number
     items: Item[]
   }
 }

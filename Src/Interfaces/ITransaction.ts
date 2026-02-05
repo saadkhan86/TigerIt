@@ -13,9 +13,9 @@ export namespace ITransaction {
             allow_redirects?: string
         } | null
         metadata: {
-            userId: string
+            userId: Types.ObjectId | string
             isPickup: boolean
-            orderId: string
+            orderId: Types.ObjectId | string
         } | any | null
 
         client_secret?: string | null
@@ -24,19 +24,16 @@ export namespace ITransaction {
         userRef: Types.ObjectId | string
         orderRef: Types.ObjectId | string | null
         paymentId: string
-        isPickup: boolean
         transactionType: "topup" | "purchase"
-        paymentMethod: "wallet" | "card"
         amount: number
         currency: string
         paymentStatus: "pending" | "succeeded" | "failed"
     }
     export interface Create {
         userId: Types.ObjectId | string
-        orderId: Types.ObjectId | string
-        isPickup: boolean
+        orderId: Types.ObjectId | string | null
+        paymentId: string
         transactionType: "topup" | "purchase"
-        paymentMethod: "wallet" | "card"
         amount: number
         currency: string
     }
@@ -44,10 +41,8 @@ export namespace ITransaction {
         userId?: Types.ObjectId | string
         _id?: Types.ObjectId | string
         orderId?: Types.ObjectId | string
-        isPickup?: boolean
-        paymentMethod?: "wallet" | "card"
         transactionType?: "topup" | "purchase"
-        paymentStatus?: "pending" | "succeeded" | "failed"
+        paymentStatus?: "succeeded" | "failed"
         limit?: number
         page?: number
     }

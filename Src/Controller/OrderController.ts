@@ -6,9 +6,9 @@ const OrderController = {
   create: async (req: Request, res: Response, next: Function) => {
     try {
       const order = await OrderRepo.create({
-        customerRef: new Types.ObjectId(req.user?._id),
+        customerRef: req.user!._id,
         paymentMethod: req.body.paymentMethod,
-        tip: req.body.tip,
+        tip: req.body.tip || 0,
         pickupPlaceId: req.body.pickupPlaceId,
         deliveryPlaceId: req.body.deliveryPlaceId,
         items: req.body.items

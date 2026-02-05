@@ -7,34 +7,7 @@ import ErrorHandler from '../ErrorHandler/ErrorHandler'
 import ValidatorUtils from '../Utils/ValidatorUtils'
 
 class VerificationRepo {
-  public async userVerificationCreate(data: IVerification.Create) {
-    let verification = await VerificationModel.findOne({
-      userRef: data.userRef,
-    })
-    if (verification) {
-      if (verification.verificationStatus == "pending" || verification.verificationStatus == "accepted")
-        throw new ErrorHandler(400, `Verification already ${verification.verificationStatus}`)
-      else if (verification.verificationStatus == "rejected") {
-        verification.verificationStatus = "pending"
-        verification.docFrontImage = data.docFrontImage
-        verification.docBackImage = data.docBackImage
-        verification.documentType = data.documentType
-        return await verification.save()
-      }
-    }
-    const docFrontImage = await ValidatorUtils.convertToUrl(data.docFrontImage)
-    if (!docFrontImage) throw new ErrorHandler(500, "Error Occured While Uploading Image")
-    const docBackImage = await ValidatorUtils.convertToUrl(data.docBackImage)
-    if (!docBackImage) throw new ErrorHandler(500, "Error Occured While Uploading Image")
-    verification = new VerificationModel({
-      userRef: data.userRef,
-      documentType: data.documentType,
-      docFrontImage,
-      docBackImage,
-      verificationStatus: "pending"
-    })
-    return await verification.save()
-  }
+
   public async userVerificationUpdate(data: {
     verificationId: Types.ObjectId | string
     approvalStatus: 'approved' | 'rejected'
@@ -80,6 +53,29 @@ class VerificationRepo {
       .limit(limit)
       .lean()
     return verification
+  }
+  public async userVerificationCreate(data: IVerification.Create) {
+    const verification = await this.userVerificationQuery({ userId: data.userRef })
+    if (verification.length > 0) {
+      if (verification[0].verificationStatus == "pending" || verification[0].verificationStatus == "accepted")
+        throw new ErrorHandler(409, `Verification already ${verification[0].verificationStatus}`)
+    }
+    const docFrontImage = await ValidatorUtils.convertToUrl(data.docFrontImage)
+    if (!docFrontImage) throw new ErrorHandler(500, "Error Occured While Uploading Image")
+    const docBackImage = await ValidatorUtils.convertToUrl(data.docBackImage)
+    if (!docBackImage) throw new ErrorHandler(500, "Error Occured While Uploading Image")
+    if (!data.name || !data.email || !data.phone) throw new ErrorHandler(400, "Profile not completed yet")
+    const newVerification = await VerificationModel.create({
+      userRef: data.userRef,
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      documentType: data.documentType,
+      docFrontImage,
+      docBackImage,
+      verificationStatus: "pending"
+    })
+    return newVerification
   }
 }
 export default new VerificationRepo()
