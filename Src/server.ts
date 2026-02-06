@@ -2,9 +2,8 @@ import Connection from './Config/Database'
 import Router from './Routes/Router'
 import cors from 'cors'
 import express, { Request, Response } from 'express'
-import { globalErrorHandler } from './Middlewares/ErrorHandler'
+import { globalErrorHandler } from './ErrorHandler/GlobalErrorHandler'
 import env from "dotenv"
-import sendEmail from './Services/SendEmail'
 env.config()
 const app = express()
 app.use(express.json())

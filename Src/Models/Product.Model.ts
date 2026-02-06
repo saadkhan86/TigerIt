@@ -5,6 +5,7 @@ const ProductSchema = new Schema<IProduct.Doc>({
   createdBy: {
     type: Types.ObjectId,
     required: [true, 'Business Id required to create product'],
+    ref: 'Business',
   },
   description: {
     type: String,

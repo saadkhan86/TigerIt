@@ -38,6 +38,7 @@ export namespace ITransaction {
         currency: string
     }
     export interface Query {
+        paymentId?: string
         userId?: Types.ObjectId | string
         _id?: Types.ObjectId | string
         orderId?: Types.ObjectId | string

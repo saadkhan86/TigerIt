@@ -6,8 +6,8 @@ const transporter = async () => {
         port: 587,
         secure: false,
         auth: {
-            user: 'sk8613013@gmail.com',
-            pass: 'fqpqbiqmzmfzkkgn'
+            user:process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASSWORD
         }
     })
 }

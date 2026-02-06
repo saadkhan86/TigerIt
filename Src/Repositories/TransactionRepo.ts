@@ -21,6 +21,7 @@ class TransactionRepo {
         const _query: QueryFilter<ITransaction.Doc> = {}
         const { limit = 10, page = 1 } = data
         if (!data.userId) throw new ErrorHandler(400, "UserId required")
+        if (data.paymentId) _query.paymentId = data.paymentId
         if (data.userId) _query.userRef = data.userId as Types.ObjectId
         if (data._id) _query._id = data._id as Types.ObjectId
         if (data.orderId) _query.orderRef = data.orderId as Types.ObjectId

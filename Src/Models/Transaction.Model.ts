@@ -16,6 +16,7 @@ const TransactionSchema = new Schema<ITransaction.Doc>(
     },
     paymentId: {
       type: String,
+      unique: [true, "Payment Id can't be repeated"],
       required: [true, 'payment id required'],
     },
     transactionType: {

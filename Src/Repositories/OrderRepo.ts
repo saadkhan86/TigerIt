@@ -53,6 +53,10 @@ class OrderRepo {
     })
     return order
   }
+  public async Update(data: { orderId: string, paymentStatus: string, paymentMethod: "wallet" | "card" }) {
+    const order = await OrderModel.findOneAndUpdate({ _id: data.orderId, paymentStatus: 'pending' }, { paymentStatus: data.paymentStatus, paymentMethod: data.paymentMethod }, { new: true })
+    return order
+  }
   public async query(data: IOrder.Query) {
     let _query: QueryFilter<IOrder.Doc> = {}
     const { limit = 10, page = 1 } = data
@@ -80,10 +84,6 @@ class OrderRepo {
   }
   public async GetById(id: string) {
     const order = await OrderModel.findById(id).lean()
-    return order
-  }
-  public async Update(data: { orderId: string, paymentStatus: string }) {
-    const order = await OrderModel.findOneAndUpdate({ _id: data.orderId, paymentStatus: 'pending' }, { paymentStatus: data.paymentStatus }, { new: true })
     return order
   }
 }

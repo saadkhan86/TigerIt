@@ -23,7 +23,7 @@ class CheckoutRepo {
       if (!variant) throw new ErrorHandler(404, 'Variant not found')
 
       if (item.quantity <= 0) throw new ErrorHandler(400, 'Quantity must be greater than 0')
-
+        
       const price = variant.price.amount
       totalCheckoutAmount += price * item.quantity
     }
