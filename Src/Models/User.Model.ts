@@ -12,7 +12,7 @@ const UserSchema = new Schema<IUser.Doc>(
     },
     firebaseId: {
       type: String,
-      unique: true,
+      unique: [true, "firebase id can not be repeated"],
       required: [true, 'Firebase User Id required'],
     },
     stripeCustomerId: {

@@ -9,6 +9,7 @@ import WishlistRouter from './WishlistRouter'
 import CheckoutRouter from './CheckoutRouter'
 import OrderRouter from './OrderRouter'
 import TransactionRouter from './TransactionRouter'
+import ChatRouter from './ChatRouter'
 const Router = express.Router()
 Router.use('/profile', ProfileRouter)//checked
 Router.use('/business', BusinessRouter)//checked
@@ -16,8 +17,9 @@ Router.use('/wallet', WalletRouter)//checked
 Router.use('/product', ProductRouter)//checked
 Router.use('/wishlist', WishlistRouter)//checked
 Router.use('/checkout', CheckoutRouter)//checked
-Router.use('/order', OrderRouter)//checked
 Router.use('/transaction', TransactionRouter)
+Router.use('/order', OrderRouter)
 Router.use('/verification/user', UserVerificationRouter)//checked
 Router.use('/verification/admin', AdminVerificationRouter)//checked
+Router.use("/chat", ChatRouter)
 export default Router
