@@ -1,11 +1,13 @@
 import Connection from './Config/Database'
 import Router from './Routes/Router'
-import { Server } from 'socket.io'
 import cors from 'cors'
-import express, { Request, Response } from 'express'
+import express from 'express'
 import { globalErrorHandler } from './ErrorHandler/GlobalErrorHandler'
-const dotenv = require("dotenv")
+import { setupSocket } from './Services/Socket.IO'
+import dotenv from 'dotenv'
 dotenv.config()
+
+
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -19,4 +21,5 @@ Connection()
     const server = app.listen(process.env.PORT, () => {
       console.log(`Server is listening on port ${process.env.PORT}`)
     })
+    setupSocket(server)
   })
