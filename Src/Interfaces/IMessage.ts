@@ -10,7 +10,7 @@ export namespace IMessage {
     export interface Populated extends Document {
         sender: { _id: Types.ObjectId; name: string };
         content: string;
-        chat: Types.ObjectId | any; // Any for now until IChat is updated or if we don't fully populate chat
+        chat: Types.ObjectId | any;
     }
 }
 export default IMessage

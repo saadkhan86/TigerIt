@@ -4,6 +4,7 @@ import UserModel from "../Models/User.Model";
 import MessageModel from "../Models/Message.Model";
 import IChat from "../Interfaces/IChat";
 import IMessage from "../Interfaces/IMessage";
+import ErrorHandler from "../ErrorHandler/ErrorHandler";
 
 class ChatRoomRepo {
 
@@ -70,7 +71,7 @@ class ChatRoomRepo {
         }, { new: true, runValidators: true })
         
         if (!message) {
-            throw new Error("Message not found")
+            throw new ErrorHandler(404,"Message not found")
         }
         
         const latestMessage = await MessageModel.findById(message._id).select("_id").lean()
