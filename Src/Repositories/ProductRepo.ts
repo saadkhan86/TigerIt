@@ -71,6 +71,7 @@ class ProductRepo {
       _query.description = data.description
     }
     const product = await ProductModel.find(_query)
+      .populate('createdBy')
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit)

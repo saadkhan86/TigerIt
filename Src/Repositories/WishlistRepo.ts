@@ -8,6 +8,7 @@ class WishlistRepo {
       userRef: data.userRef,
       businessRef: data.businessRef,
     })
+    await wishlist.populate('businessRef')
     return wishlist
   }
   public async delete(data: IWishlist.General) {
@@ -26,7 +27,8 @@ class WishlistRepo {
     if (data.wishlistId) {
       _query._id = data.wishlistId
     }
-    const wishlist = await WishlistModel.find({ userRef, _query })
+    const wishlist = await WishlistModel.find({ userRef, ..._query })
+      .populate('businessRef')
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip((page - 1) * limit)

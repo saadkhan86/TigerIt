@@ -7,7 +7,14 @@ const ProfileController = {
   },
   update: async (req: Request, res: Response, next: Function) => {
     try {
-      const profile = await ProfileRepo.update(req.user?._id!,{...req.body})
+      const profile = await ProfileRepo.update(req.user?._id!,{
+        name:req.body.name,
+        email:req.body.email,
+        deliveryAddress:req.body.deliveryAddress,
+        gender:req.body.gender,
+        DOB:req.body.DOB,
+        profileImage:req.body.profileImage,
+      })
       res.status(200).json({ success: true, profile })
     } catch (error) {
       next(error)

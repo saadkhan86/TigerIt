@@ -5,6 +5,7 @@ import BusinessModel from '../Models/Business.Model'
 import ProfileRepo from './ProfileRepo'
 import ErrorHandler from '../ErrorHandler/ErrorHandler'
 import ValidatorUtils from '../Utils/ValidatorUtils'
+import UserModel from '../Models/User.Model'
 
 class VerificationRepo {
 
@@ -18,7 +19,7 @@ class VerificationRepo {
       { new: true }
     )
     if (!verification) throw new ErrorHandler(404, "Verification Not Found")
-    await ProfileRepo.update(verification.userRef!, {
+    await UserModel.findByIdAndUpdate(verification.userRef, {
       verificationStatus: data.approvalStatus,
     })
     return verification
@@ -51,7 +52,6 @@ class VerificationRepo {
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit)
-      .lean()
     return verification
   }
   public async userVerificationCreate(data: IVerification.Create) {

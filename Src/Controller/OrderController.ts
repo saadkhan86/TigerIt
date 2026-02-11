@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import OrderRepo from '../Repositories/OrderRepo'
-import { Types } from 'mongoose'
 
 const OrderController = {
   create: async (req: Request, res: Response, next: Function) => {

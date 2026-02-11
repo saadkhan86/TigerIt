@@ -17,7 +17,7 @@ const ProductController = {
   },
   update: async (req: Request, res: Response, next: Function) => {
     try {
-      const product = await ProductRepo.update(req.params.id as string, {
+      const product = await ProductRepo.update(req.params.productId as string, {
         createdBy: req.body.businessId,
         description: req.body.description,
         forAdult: req.body.forAdult,
@@ -31,7 +31,7 @@ const ProductController = {
   },
   delete: async (req: Request, res: Response, next: Function) => {
     try {
-      const _id = req.query._id as string
+      const _id = req.query.productId as string
       const createdBy = req.query.createdBy as string
       const product = await ProductRepo.delete({ _id, createdBy })
       res.status(200).json({ success: true, product })

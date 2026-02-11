@@ -24,7 +24,6 @@ export namespace IUser {
     firebaseId: string
   }
   export interface Update {
-    verificationStatus?: 'pending' | 'approved' | 'rejected'
     name?: string
     email?: string
     gender?: 'male' | 'female' | 'personal'

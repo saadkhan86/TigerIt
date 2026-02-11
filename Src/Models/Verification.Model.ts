@@ -6,6 +6,7 @@ const VerificationSchema = new mongoose.Schema<IVerification.Doc>(
   {
     userRef: {
       type: Types.ObjectId,
+      ref:"User",
       required: [true, 'user required for verification'],
     },
     name: {

@@ -11,10 +11,9 @@ class ProfileRepo {
       throw new ErrorHandler(404, "User Not Found")
     }
 
-    const { name, email, verificationStatus, deliveryAddress, gender, DOB, profileImage } = data
+    const { name, email, deliveryAddress, gender, DOB, profileImage } = data
     if (name) userProfile.name = name
     if (email) userProfile.email = email
-    if (verificationStatus) userProfile.verificationStatus = verificationStatus
     if (deliveryAddress) userProfile.deliveryAddress = deliveryAddress
     if (gender) userProfile.gender = gender
     if (DOB) userProfile.DOB = DOB

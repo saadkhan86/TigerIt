@@ -4,7 +4,7 @@ import Authentication from '../Middlewares/Authentication'
 const ProductRouter = express.Router()
 ProductRouter.use(Authentication.userAuth)
 ProductRouter.post('/', ProductController.create)
-ProductRouter.patch('/:id', ProductController.update)
-ProductRouter.delete('/:id', ProductController.delete)
+ProductRouter.patch('/:productId', ProductController.update)
+ProductRouter.delete('/:productId', ProductController.delete)
 ProductRouter.get('/', ProductController.query)
 export default ProductRouter

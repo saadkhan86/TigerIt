@@ -40,14 +40,14 @@ class ChatRoomRepo {
     public async messageCreate(data: { chatId: Types.ObjectId | string, _id: Types.ObjectId | string, content: string }) {
         let message = await MessageModel.create({
             chat: data.chatId,
-            sender: data._id,
+            sender:"6989c521e05d587c5a5b9e0c",
             content: data.content
         })
         message = await message.populate("sender", "name")
         message = await message.populate("chat")
         await ChatModel.findByIdAndUpdate(data.chatId, {
             latestMessage: message._id
-        })
+        },{new:true,runValidators:true})
         return message
     }
     public async updateMessage(data: { chatId: Types.ObjectId | string, _id: Types.ObjectId | string, messageId: Types.ObjectId | string, content: string }) {
