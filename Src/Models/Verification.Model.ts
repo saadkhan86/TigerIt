@@ -6,24 +6,30 @@ const VerificationSchema = new mongoose.Schema<IVerification.Doc>(
   {
     userRef: {
       type: Types.ObjectId,
-      ref:"User",
+      ref: "User",
       required: [true, 'user required for verification'],
     },
     name: {
       type: String,
       required: true,
+      trim: true
     },
     email: {
       type: String,
       required: true,
+      trim: true,
+      match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid Email"],
     },
     phone: {
       type: String,
       required: true,
+      trim: true,
+      match: [/^\+?[1-9]\d{7,14}$/, 'Invalid phone number'],
     },
     verificationStatus: {
       type: String,
       enum: ['pending', 'accepted', 'rejected'],
+      default: "pending"
     },
     documentType: {
       type: String,

@@ -29,6 +29,7 @@ const ChatController = {
     },
     createMessage: async (req: Request, res: Response, next: Function) => {
         try {
+            console.log("hit")
             const message = await ChatRepo.messageCreate({ _id: req.user!._id, chatId: req.body.chatId, content: req.body.content })
             getIO().to(req.body.chatId as string).emit("message_created",message)
             res.status(200).json({ success: true, message })
@@ -42,6 +43,15 @@ const ChatController = {
             getIO().to(req.body.chatId as string).emit("message_updated",chats)
             res.status(200).json({ success: true, chats })
         } catch (error) {
+            next(error, req, res)
+        }
+    },
+    deleteMessage:async (req:Request,res:Response,next:Function)=>{
+        try{
+            const message =await ChatRepo.deleteMessage({chatId:req.body.chatId,messageId:req.body.messageId,senderId:req.user!._id})
+            getIO().to(req.body.chatId as string).emit("message_deleted",message)
+            res.status(200).json({ success: true, message })
+        }catch(error){
             next(error, req, res)
         }
     }

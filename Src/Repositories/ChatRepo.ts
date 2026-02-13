@@ -9,17 +9,17 @@ import ErrorHandler from "../ErrorHandler/ErrorHandler";
 class ChatRoomRepo {
 
     public async createchat(data: { _id: Types.ObjectId | string, userId: Types.ObjectId | string }): Promise<IChat.Populated> {
-        let chat = await this.getSinguleChatByUser({ _id: data._id, userId: data.userId });
+        let chat = await this.getSingleChatByUser({ _id: data._id, userId: data.userId });
         if (!chat) {
             await ChatModel.create({
                 users: [data._id, data.userId]
             })
-            chat = await this.getSinguleChatByUser({ _id: data._id, userId: data.userId });
+            chat = await this.getSingleChatByUser({ _id: data._id, userId: data.userId });
         }
         return chat as IChat.Populated;
     }
 
-    public async getSinguleChatByUser(data: { _id: Types.ObjectId | string, userId?: Types.ObjectId | string }): Promise<IChat.Populated | null> {
+    public async getSingleChatByUser(data: { _id: Types.ObjectId | string, userId?: Types.ObjectId | string }): Promise<IChat.Populated | null> {
         let chat = await ChatModel.findOne({
             users: {
                 $all: [data._id, data.userId]
@@ -33,9 +33,9 @@ class ChatRoomRepo {
     }
 
     public async getSingleChatById(data: { _id: Types.ObjectId | string }): Promise<IChat.Populated | null> {
-        let chat = await ChatModel.findById(data._id).populate("users", "name phone").populate("latestMessage")
-        if (chat) {
-            await UserModel.populate(chat, { path: "latestMessage.sender", select: "name" })
+        let chat = await MessageModel.findOne({chat:data._id}).populate("sender","name").populate("chat","users")
+        if(chat){
+            await UserModel.populate(chat, { path: "chat.users", select: "name" })
         }
         return chat as unknown as IChat.Populated | null
     }
@@ -79,6 +79,17 @@ class ChatRoomRepo {
             latestMessage: latestMessage ? latestMessage._id : null
         }, { new: true, runValidators: true })
         
+        return message
+    }
+    public async deleteMessage(data:{chatId:string,messageId:string,senderId:string | Types.ObjectId}){
+        const message = await MessageModel.findOneAndDelete({_id:data.messageId,sender:data.senderId})
+        if(!message){
+            throw new ErrorHandler(404,"Message not found")
+        }
+        const latestMessage = await MessageModel.findOne({chat:data.chatId}).sort({createdAt:-1}).select("_id").lean()
+        await ChatModel.findByIdAndUpdate(data.chatId, {
+            latestMessage: latestMessage ? latestMessage._id : null
+        }, { new: true, runValidators: true })
         return message
     }
 }

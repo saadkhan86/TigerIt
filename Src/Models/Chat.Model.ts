@@ -1,4 +1,4 @@
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 import IChat from "../Interfaces/IChat";
 const ChatSchema = new mongoose.Schema<IChat.Doc>({
     users: [
@@ -8,7 +8,7 @@ const ChatSchema = new mongoose.Schema<IChat.Doc>({
         }
     ],
     latestMessage: {
-        type: Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Message",
         default: null
     }

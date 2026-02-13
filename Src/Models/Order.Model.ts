@@ -1,29 +1,29 @@
-import mongoose, { Types } from 'mongoose'
+import mongoose from 'mongoose'
 import { IOrder } from '../Interfaces/IOrder'
 
 const OrderSchema = new mongoose.Schema<IOrder.Doc>(
   {
     customerRef: {
-      type: Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
     },
     items: [
       {
         product: {
-          type: Types.ObjectId,
+          type: mongoose.Schema.Types.ObjectId,
           ref: 'Product',
           required: true,
         },
         variant: {
-          type: Types.ObjectId,
+          type: mongoose.Schema.Types.ObjectId,
           ref: 'Product.Variant',
           required: true,
         },
         quantity: {
           type: Number,
-          default: 1,
           required: true,
+          default: 1,
         },
       },
     ],
@@ -46,15 +46,16 @@ const OrderSchema = new mongoose.Schema<IOrder.Doc>(
     deliveryFee: {
       type: Number,
       required: true,
-      default: 0,
     },
     pickupPlaceId: {
       type: String,
       required: true,
+      trim: true
     },
     deliveryPlaceId: {
       type: String,
       required: true,
+      trim: true
     },
     tip: {
       type: Number,

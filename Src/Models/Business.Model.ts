@@ -1,16 +1,16 @@
-import mongoose, { Types } from 'mongoose'
+import mongoose from 'mongoose'
 import IBusiness from '../Interfaces/IBusiness'
-const Schema = mongoose.Schema
-const BusinessSchema = new Schema<IBusiness.Doc>(
+const BusinessSchema = new mongoose.Schema<IBusiness.Doc>(
   {
     ownerRef: {
-      type: Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: [true, 'User Id required for creating business'],
       ref: 'User',
     },
     businessTitle: {
       type: String,
-      required: true,
+      required: [true, "Business Title Required"],
+      trim: true
     },
     approvalStatus: {
       type: String,
@@ -19,32 +19,35 @@ const BusinessSchema = new Schema<IBusiness.Doc>(
     },
     businessDescription: {
       type: String,
-      required: true,
+      trim: true,
+      required: [true, "Business Description Required"],
     },
     businessEmail: {
       type: String,
-      required: true,
+      lowercase: true,
+      trim: true,
+      match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid Email"],
+      required: [true, "Business Email Required"],
     },
     businessPhone: {
       type: String,
-      required: true,
-      unique: true,
       trim: true,
+      unique: [true, "Business Phone can't be repeated"],
+      required: [true, "Business Phone Required"],
       match: [/^\+?[1-9]\d{7,14}$/, 'Invalid phone number'],
     },
     businessAddress: {
       type: String,
-      required: true,
+      trim: true,
+      required: [true, "Business Address Required"],
     },
     businessCoverImage: {
       type: String,
-      required: true,
-      default: '234234',
+      required: [true, "Business Cover Image Required"],
     },
     businessProfileImage: {
       type: String,
-      required: true,
-      default: 'wieuroi732578',
+      required: [true, "Business Profile Image Required"],
     },
   },
   { timestamps: true },

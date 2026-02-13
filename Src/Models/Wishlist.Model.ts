@@ -5,12 +5,12 @@ const WishlistSchema = new Schema<IWishlist.Doc>(
   {
     userRef: {
       type: Types.ObjectId,
-      required: [true, 'User Id Required'],
+      required: [true, 'User Reference Required'],
       ref: 'User',
     },
     businessRef: {
       type: Types.ObjectId,
-      required: [true, 'Business Id Required'],
+      required: [true, 'Business Reference Required'],
       ref: 'Business',
     },
   },

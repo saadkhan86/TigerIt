@@ -1,16 +1,15 @@
-import mongoose, { Types } from 'mongoose'
+import mongoose from 'mongoose'
 import ITransaction from '../Interfaces/ITransaction'
 
-const Schema = mongoose.Schema
-const TransactionSchema = new Schema<ITransaction.Doc>(
+const TransactionSchema = new mongoose.Schema<ITransaction.Doc>(
   {
     userRef: {
-      type: Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: [true, 'User Id required'],
     },
     orderRef: {
-      type: Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Order",
       default: null,
     },
@@ -27,6 +26,7 @@ const TransactionSchema = new Schema<ITransaction.Doc>(
     amount: {
       type: Number,
       required: true,
+      min: [0, "Amount can't be negative"]
     },
     paymentStatus: {
       type: String,

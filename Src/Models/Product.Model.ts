@@ -1,26 +1,26 @@
-import mongoose, { Types } from 'mongoose'
+import mongoose from 'mongoose'
 import IProduct from '../Interfaces/IProduct'
-const Schema = mongoose.Schema
-const ProductSchema = new Schema<IProduct.Doc>({
+const ProductSchema = new mongoose.Schema<IProduct.Doc>({
   createdBy: {
-    type: Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: [true, 'Business Id required to create product'],
     ref: 'Business',
   },
   description: {
     type: String,
-    required: true,
+    required: [true, 'Product Description Required'],
+    trim: true
   },
   forAdult: {
     type: Boolean,
     default: false,
-    required: true,
   },
   variants: [
     {
       title: {
         type: String,
         required: true,
+        trim: true
       },
       price: {
         amount: {

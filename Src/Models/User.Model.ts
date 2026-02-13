@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 import { IUser } from '../Interfaces/IUser'
-const Schema = mongoose.Schema
-const UserSchema = new Schema<IUser.Doc>(
+const UserSchema = new mongoose.Schema<IUser.Doc>(
   {
     phone: {
       type: String,
@@ -12,7 +11,7 @@ const UserSchema = new Schema<IUser.Doc>(
     },
     firebaseId: {
       type: String,
-      unique: [true, "firebase id can not be repeated"],
+      unique: true,
       required: [true, 'Firebase User Id required'],
     },
     stripeCustomerId: {
@@ -25,6 +24,8 @@ const UserSchema = new Schema<IUser.Doc>(
     },
     email: {
       type: String,
+      unique: true,
+      match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid Email"],
     },
     gender: {
       type: String,
@@ -36,6 +37,7 @@ const UserSchema = new Schema<IUser.Doc>(
     verificationStatus: {
       type: String,
       enum: ['pending', 'approved', 'rejected'],
+      default: "pending"
     },
     profileImage: {
       type: String,
@@ -54,7 +56,8 @@ const UserSchema = new Schema<IUser.Doc>(
         },
       },
     }, deliveryAddress: {
-      type: String
+      type: String,
+      trim: true
     }
   },
   { timestamps: true },
