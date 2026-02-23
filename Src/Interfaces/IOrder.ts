@@ -1,27 +1,27 @@
-import { Types } from 'mongoose'
+import { Types } from "mongoose"
 
-export namespace IOrder {
-  export interface Item {
+export declare namespace IOrder {
+  interface Item {
     product: Types.ObjectId | string
     variant: Types.ObjectId | string
     quantity: number
   }
-  export interface Doc extends Document {
+  interface Doc extends Document {
     customerRef: Types.ObjectId | string
-    paymentMethod: 'card' | 'wallet'
-    paymentStatus: 'paid' | 'pending'
+    paymentMethod: "card" | "wallet"
+    paymentStatus: "paid" | "pending"
     tip?: number
     serviceFee: number
     deliveryFee: number
     pickupPlaceId: string
     deliveryPlaceId: string
     items: Item[]
-    deliveryStatus: 'inProgress' | 'delivered' | 'cancelled'
+    deliveryStatus: "inProgress" | "delivered" | "cancelled"
     totalAmount: number
   }
-  export interface Create {
+  interface Create {
     customerRef: Types.ObjectId | string
-    paymentMethod: 'card' | 'wallet'
+    paymentMethod: "card" | "wallet"
     tip: number
     serviceFee?: 3.44 | 5.44 | 8
     deliveryFee?: number
@@ -29,12 +29,12 @@ export namespace IOrder {
     deliveryPlaceId: string
     items: Item[]
   }
-  export interface Query {
+  interface Query {
     orderId?: Types.ObjectId | string
     customerRef?: Types.ObjectId | string
-    paymentMethod?: 'card' | 'wallet'
-    deliveryStatus?: 'inProgress' | 'delivered' | 'cancelled'
-    paymentStatus?: 'paid' | 'pending'
+    paymentMethod?: "card" | "wallet"
+    deliveryStatus?: "inProgress" | "delivered" | "cancelled"
+    paymentStatus?: "paid" | "pending"
     limit?: number
     page?: number
   }

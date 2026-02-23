@@ -1,13 +1,13 @@
 import { Types } from 'mongoose'
 
 export namespace ICheckout {
-  export interface Item {
+   interface Item {
     product: Types.ObjectId | string
     variant: Types.ObjectId | string
     quantity: number
   }
 
-  export interface Create {
+  interface Create {
     customerId: string | Types.ObjectId
     tip?: number
     serviceFee?: number

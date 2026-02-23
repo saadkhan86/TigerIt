@@ -1,7 +1,7 @@
-import { Document, Types } from 'mongoose'
+import { Document, Types } from "mongoose"
 
-export namespace IProduct {
-  export interface Variants {
+export declare namespace IProduct {
+  interface Variants {
     _id: Types.ObjectId | string
     title: string
     price: {
@@ -9,32 +9,32 @@ export namespace IProduct {
       currency: string
     }
   }
-  export interface Doc extends Document {
+  interface Doc extends Document {
     createdBy: Types.ObjectId | string
     description: string
     forAdult: boolean
     variants: Variants[]
     image: string
   }
-  export interface Create {
+  interface Create {
     createdBy: Types.ObjectId | string
     description: string
     forAdult: boolean
     variants: Variants[]
     image: string
   }
-  export interface Update {
+  interface Update {
     createdBy: Types.ObjectId | string
     description?: string
     forAdult?: boolean
     variants?: Variants[]
     image?: string
   }
-  export interface Delete {
+  interface Delete {
     createdBy: Types.ObjectId | string
     _id: Types.ObjectId | string
   }
-  export interface Query {
+  interface Query {
     createdBy?: Types.ObjectId | string
     productId?: Types.ObjectId | string
     description?: string
@@ -42,4 +42,3 @@ export namespace IProduct {
     page?: number
   }
 }
-export default IProduct

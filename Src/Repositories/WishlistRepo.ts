@@ -1,5 +1,5 @@
 import { QueryFilter, Types } from 'mongoose'
-import IWishlist from '../Interfaces/IWishlist'
+import {IWishlist} from '../Interfaces/IWishlist'
 import WishlistModel from '../Models/Wishlist.Model'
 
 class WishlistRepo {

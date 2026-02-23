@@ -1,12 +1,12 @@
-import mongoose from 'mongoose'
-import ITransaction from '../Interfaces/ITransaction'
+import mongoose from "mongoose"
+import { ITransaction } from "../Interfaces/ITransaction"
 
 const TransactionSchema = new mongoose.Schema<ITransaction.Doc>(
   {
     userRef: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: [true, 'User Id required'],
+      required: [true, "User Id required"],
     },
     orderRef: {
       type: mongoose.Schema.Types.ObjectId,
@@ -15,26 +15,29 @@ const TransactionSchema = new mongoose.Schema<ITransaction.Doc>(
     },
     paymentId: {
       type: String,
-      unique: [true, "Payment Id can't be repeated"],
-      required: [true, 'payment id required'],
+      unique: true,
+      required: [true, "payment id required"],
     },
     transactionType: {
       type: String,
-      enum: ['topup', 'purchase'],
+      enum: ["topup", "purchase"],
       required: true,
     },
     amount: {
       type: Number,
       required: true,
-      min: [0, "Amount can't be negative"]
+      min: [0, "Amount can't be negative"],
     },
     paymentStatus: {
       type: String,
-      enum: ['pending', 'succeeded', 'failed'],
+      enum: ["pending", "succeeded", "failed"],
       required: true,
     },
   },
   { timestamps: true },
 )
-const TransactionModel = mongoose.model<ITransaction.Doc>("Transaction", TransactionSchema)
+const TransactionModel = mongoose.model<ITransaction.Doc>(
+  "Transaction",
+  TransactionSchema,
+)
 export default TransactionModel

@@ -1,19 +1,18 @@
-import { Types } from 'mongoose'
+import { Types } from "mongoose"
 
-export namespace IWishlist {
-  export interface Doc extends Document {
+export declare namespace IWishlist {
+  interface Doc extends Document {
     userRef: Types.ObjectId | string
     businessRef: Types.ObjectId | string
   }
-  export interface General {
+  interface General {
     userRef: Types.ObjectId | string
     businessRef: Types.ObjectId | string
   }
-  export interface Query {
+  interface Query {
     businessRef?: Types.ObjectId | string
     wishlistId?: Types.ObjectId | string
     limit?: number
     page?: number
   }
 }
-export default IWishlist

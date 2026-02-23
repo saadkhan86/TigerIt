@@ -1,32 +1,31 @@
-import { Document, Types } from 'mongoose'
+import { Document, Types } from "mongoose"
 
-export namespace IVerification {
-  export interface Doc extends Document {
+export declare namespace IVerification {
+  interface Doc extends Document {
     userRef: Types.ObjectId | string
     name: string
     email: string
     phone: string
-    documentType: 'passport' | 'driverLicense' | 'nationalId'
-    verificationStatus: 'pending' | 'accepted' | 'rejected'
+    documentType: "passport" | "driverLicense" | "nationalId"
+    verificationStatus: "pending" | "accepted" | "rejected"
     docFrontImage: string
     docBackImage: string
   }
-  export interface Create {
+  interface Create {
     userRef: Types.ObjectId | string
     name: string
     email: string
     phone: string
-    documentType: 'passport' | 'driverLicense' | 'nationalId'
+    documentType: "passport" | "driverLicense" | "nationalId"
     docFrontImage: string
     docBackImage: string
   }
-  export interface Query {
+  interface Query {
     _id?: Types.ObjectId | string
     userId?: Types.ObjectId | string
-    documentType?: 'passport' | 'driverLicense' | 'nationalId'
-    verificationStatus?: 'pending' | 'accepted' | 'rejected'
+    documentType?: "passport" | "driverLicense" | "nationalId"
+    verificationStatus?: "pending" | "accepted" | "rejected"
     limit?: number
     page?: number
   }
 }
-export default IVerification

@@ -1,6 +1,6 @@
-import { Request, Response } from 'express'
-import WishlistRepo from '../Repositories/WishlistRepo'
-import IWishlist from '../Interfaces/IWishlist'
+import { Request, Response } from "express"
+import WishlistRepo from "../Repositories/WishlistRepo"
+import { IWishlist } from "../Interfaces/IWishlist"
 
 const WishlistController = {
   create: async (req: Request, res: Response, next: Function) => {

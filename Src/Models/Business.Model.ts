@@ -1,21 +1,21 @@
-import mongoose from 'mongoose'
-import IBusiness from '../Interfaces/IBusiness'
+import mongoose from "mongoose"
+import { IBusiness } from "../Interfaces/IBusiness"
 const BusinessSchema = new mongoose.Schema<IBusiness.Doc>(
   {
     ownerRef: {
       type: mongoose.Schema.Types.ObjectId,
-      required: [true, 'User Id required for creating business'],
-      ref: 'User',
+      required: [true, "User Id required for creating business"],
+      ref: "User",
     },
     businessTitle: {
       type: String,
       required: [true, "Business Title Required"],
-      trim: true
+      trim: true,
     },
     approvalStatus: {
       type: String,
-      enum: ['pending', 'approved', 'rejected'],
-      default: 'pending',
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
     },
     businessDescription: {
       type: String,
@@ -26,15 +26,18 @@ const BusinessSchema = new mongoose.Schema<IBusiness.Doc>(
       type: String,
       lowercase: true,
       trim: true,
-      match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid Email"],
+      match: [
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        "Invalid Email",
+      ],
       required: [true, "Business Email Required"],
     },
     businessPhone: {
       type: String,
       trim: true,
-      unique: [true, "Business Phone can't be repeated"],
+      unique: true,
       required: [true, "Business Phone Required"],
-      match: [/^\+?[1-9]\d{7,14}$/, 'Invalid phone number'],
+      match: [/^\+?[1-9]\d{7,14}$/, "Invalid phone number"],
     },
     businessAddress: {
       type: String,
@@ -52,5 +55,5 @@ const BusinessSchema = new mongoose.Schema<IBusiness.Doc>(
   },
   { timestamps: true },
 )
-const BusinessModel = mongoose.model<IBusiness.Doc>('Business', BusinessSchema)
+const BusinessModel = mongoose.model<IBusiness.Doc>("Business", BusinessSchema)
 export default BusinessModel

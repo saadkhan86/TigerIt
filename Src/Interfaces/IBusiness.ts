@@ -1,8 +1,8 @@
-import { Types } from 'mongoose'
+import { Types } from "mongoose"
 
-export namespace IBusiness {
-  export interface Doc extends Document {
-    approvalStatus: 'pending' | 'approved' | 'rejected'
+export declare namespace IBusiness {
+  interface Doc extends Document {
+    approvalStatus: "pending" | "approved" | "rejected"
     ownerRef: Types.ObjectId | string
     businessTitle: string
     businessDescription: string
@@ -12,9 +12,9 @@ export namespace IBusiness {
     businessCoverImage: string
     businessProfileImage: string
   }
-  export interface Create {
+  interface Create {
     ownerRef: Types.ObjectId | string
-    approvalStatus?: 'pending' | 'approved' | 'rejected'
+    approvalStatus?: "pending" | "approved" | "rejected"
     businessTitle: string
     businessDescription: string
     businessEmail: string
@@ -23,7 +23,7 @@ export namespace IBusiness {
     businessCoverImage: string
     businessProfileImage: string
   }
-  export interface Update {
+  interface Update {
     ownerRef?: Types.ObjectId | string
     businessTitle?: string
     businessDescription?: string
@@ -33,8 +33,8 @@ export namespace IBusiness {
     businessCoverImage?: string
     businessProfileImage?: string
   }
-  export interface Query {
-    approvalStatus?: 'pending' | 'approved' | 'rejected'
+  interface Query {
+    approvalStatus?: "pending" | "approved" | "rejected"
     ownerRef?: Types.ObjectId | string
     businessTitle?: string
     businessEmail?: string
@@ -43,4 +43,3 @@ export namespace IBusiness {
     limit?: number
   }
 }
-export default IBusiness

@@ -1,15 +1,15 @@
-import mongoose from 'mongoose'
-import IProduct from '../Interfaces/IProduct'
+import mongoose from "mongoose"
+import { IProduct } from "../Interfaces/IProduct"
 const ProductSchema = new mongoose.Schema<IProduct.Doc>({
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    required: [true, 'Business Id required to create product'],
-    ref: 'Business',
+    required: [true, "Business Id required to create product"],
+    ref: "Business",
   },
   description: {
     type: String,
-    required: [true, 'Product Description Required'],
-    trim: true
+    required: [true, "Product Description Required"],
+    trim: true,
   },
   forAdult: {
     type: Boolean,
@@ -20,7 +20,7 @@ const ProductSchema = new mongoose.Schema<IProduct.Doc>({
       title: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
       },
       price: {
         amount: {
@@ -29,7 +29,7 @@ const ProductSchema = new mongoose.Schema<IProduct.Doc>({
         },
         currency: {
           type: String,
-          default: '$',
+          default: "$",
         },
       },
     },
@@ -40,5 +40,5 @@ const ProductSchema = new mongoose.Schema<IProduct.Doc>({
   },
 })
 
-const ProductModel = mongoose.model<IProduct.Doc>('Product', ProductSchema)
+const ProductModel = mongoose.model<IProduct.Doc>("Product", ProductSchema)
 export default ProductModel
