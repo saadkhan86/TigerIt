@@ -8,7 +8,6 @@ class WalletRepo {
     if (!user) {
       throw new ErrorHandler(404, 'wallet not found')
     }
-    console.log(user.wallet)
     return user.wallet
   }
   public async topupUpdate(userId: Types.ObjectId | string, amount: number) {

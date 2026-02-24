@@ -5,7 +5,7 @@ import Authentication from "../Middlewares/Authentication"
 const AdminVerificationRouter = express.Router()
 AdminVerificationRouter.use(Authentication.adminAuth)
 AdminVerificationRouter.patch(
-  "/user/:id",
+  "/users/:id",
   VerificationController.userVerificationUpdate,
 )
 AdminVerificationRouter.patch(
@@ -13,7 +13,7 @@ AdminVerificationRouter.patch(
   VerificationController.businessVerificationUpdate,
 )
 AdminVerificationRouter.get(
-  "/user",
+  "/users",
   VerificationController.userVerificationQuery,
 )
 AdminVerificationRouter.get(

@@ -1,7 +1,7 @@
-import { Types } from 'mongoose'
+import { Types } from "mongoose"
 
-export namespace ICheckout {
-   interface Item {
+export declare namespace ICheckout {
+  interface Item {
     product: Types.ObjectId | string
     variant: Types.ObjectId | string
     quantity: number
@@ -17,4 +17,3 @@ export namespace ICheckout {
     items: Item[]
   }
 }
-export default ICheckout

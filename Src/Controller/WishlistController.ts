@@ -7,7 +7,7 @@ const WishlistController = {
     try {
       const wishlist = await WishlistRepo.create({
         userRef: req.user?._id!,
-        businessRef: req.body.businessId as string,
+        businessRef: req.params.businessId as string,
       })
       res.status(200).json({ success: true, wishlist })
     } catch (error) {
@@ -18,7 +18,7 @@ const WishlistController = {
     try {
       const wishlist = await WishlistRepo.delete({
         userRef: req.user?._id!,
-        businessRef: req.params.id as string,
+        businessRef: req.params.wishlistId as string,
       })
       res.status(200).json({ success: true, wishlist })
     } catch (error) {

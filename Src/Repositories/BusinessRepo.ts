@@ -1,17 +1,22 @@
-import { QueryFilter, Types } from 'mongoose'
-import IBusiness from '../Interfaces/IBusiness'
-import BusinessModel from '../Models/Business.Model'
-import ErrorHandler from '../ErrorHandler/ErrorHandler'
-import ValidatorUtils from '../Utils/ValidatorUtils'
+import { QueryFilter, Types } from "mongoose"
+import { IBusiness } from "../Interfaces/IBusiness"
+import BusinessModel from "../Models/Business.Model"
+import ErrorHandler from "../ErrorHandler/ErrorHandler"
+import ValidatorUtils from "../Utils/ValidatorUtils"
 
 class BusinessRepo {
   public async create(data: IBusiness.Create) {
-    const coverImage = await ValidatorUtils.convertToUrl(data.businessCoverImage)
-    const profileImage = await ValidatorUtils.convertToUrl(data.businessProfileImage)
-    if (!coverImage || !profileImage) throw new ErrorHandler(500, "Error Occured While Uploading Image")
+    const coverImage = await ValidatorUtils.convertToUrl(
+      data.businessCoverImage,
+    )
+    const profileImage = await ValidatorUtils.convertToUrl(
+      data.businessProfileImage,
+    )
+    if (!coverImage || !profileImage)
+      throw new ErrorHandler(500, "Error Occured While Uploading Image")
     const business = await BusinessModel.create({
       businessTitle: data.businessTitle,
-      approvalStatus: 'pending',
+      approvalStatus: "pending",
       businessEmail: data.businessEmail,
       businessAddress: data.businessAddress,
       businessPhone: data.businessPhone,
@@ -31,7 +36,7 @@ class BusinessRepo {
       ownerRef: data.ownerRef,
     })
     if (!business) {
-      throw new ErrorHandler(404, 'Business Not Found')
+      throw new ErrorHandler(404, "Business Not Found")
     }
     if (data.businessTitle) {
       business.businessTitle = data.businessTitle
@@ -46,14 +51,18 @@ class BusinessRepo {
       business.businessPhone = data.businessPhone
     }
     if (data.businessCoverImage) {
-      const coverImage = await ValidatorUtils.convertToUrl(data.businessCoverImage)
+      const coverImage = await ValidatorUtils.convertToUrl(
+        data.businessCoverImage,
+      )
       if (coverImage) business.businessCoverImage = coverImage
-      else console.log('Error occured while uploading image')
+      else console.log("Error occured while uploading image")
     }
     if (data.businessProfileImage) {
-      const profileImage = await ValidatorUtils.convertToUrl(data.businessProfileImage)
+      const profileImage = await ValidatorUtils.convertToUrl(
+        data.businessProfileImage,
+      )
       if (profileImage) business.businessProfileImage = profileImage
-      else console.log('Error occured while uploading image')
+      else console.log("Error occured while uploading image")
     }
     if (data.businessDescription) {
       business.businessDescription = data.businessDescription

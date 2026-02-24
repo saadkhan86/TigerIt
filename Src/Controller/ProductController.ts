@@ -1,5 +1,5 @@
-import { Request, Response } from 'express'
-import ProductRepo from '../Repositories/ProductRepo'
+import { Request, Response } from "express"
+import ProductRepo from "../Repositories/ProductRepo"
 const ProductController = {
   create: async (req: Request, res: Response, next: Function) => {
     try {
@@ -17,6 +17,7 @@ const ProductController = {
   },
   update: async (req: Request, res: Response, next: Function) => {
     try {
+      console.log(req.body)
       const product = await ProductRepo.update(req.params.productId as string, {
         createdBy: req.body.businessId,
         description: req.body.description,

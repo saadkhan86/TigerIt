@@ -1,5 +1,5 @@
 import ProductModel from '../Models/Product.Model'
-import ICheckout from '../Interfaces/ICheckout'
+import {ICheckout} from '../Interfaces/ICheckout'
 import WalletRepo from './WalletRepo'
 import ErrorHandler from '../ErrorHandler/ErrorHandler'
 

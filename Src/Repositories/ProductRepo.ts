@@ -1,21 +1,22 @@
-import { QueryFilter, Types } from 'mongoose'
-import IProduct from '../Interfaces/IProduct'
-import ProductModel from '../Models/Product.Model'
-import ErrorHandler from '../ErrorHandler/ErrorHandler'
-import BusinessModel from '../Models/Business.Model'
-import ValidatorUtils from '../Utils/ValidatorUtils'
+import { QueryFilter, Types } from "mongoose"
+import { IProduct } from "../Interfaces/IProduct"
+import ProductModel from "../Models/Product.Model"
+import ErrorHandler from "../ErrorHandler/ErrorHandler"
+import BusinessModel from "../Models/Business.Model"
+import ValidatorUtils from "../Utils/ValidatorUtils"
 
 class ProductRepo {
   public async create(data: IProduct.Create) {
     const business = await BusinessModel.findById(data.createdBy)
-    if (!business || business.approvalStatus === 'pending') {
+    if (!business || business.approvalStatus === "pending") {
       throw new ErrorHandler(
         404,
-        'Either business not approved yet or business not found',
+        "Either business not approved yet or business not found",
       )
     }
     const image = await ValidatorUtils.convertToUrl(data.image)
-    if (!image) throw new ErrorHandler(500, "Error Occured While Uploading Image")
+    if (!image)
+      throw new ErrorHandler(500, "Error Occured While Uploading Image")
     const product = await ProductModel.create({
       createdBy: data.createdBy,
       description: data.description,
@@ -29,12 +30,12 @@ class ProductRepo {
     productId: Types.ObjectId | string,
     data: IProduct.Update,
   ) {
+    console.log(data)
     let product = await ProductModel.findOne({
       _id: productId,
       createdBy: data.createdBy,
     })
-    if (!product)
-      throw new ErrorHandler(404, "Product not found")
+    if (!product) throw new ErrorHandler(404, "Product not found")
     if (data.description) {
       product.description = data.description
     }
@@ -44,7 +45,7 @@ class ProductRepo {
     if (data.image) {
       const image = await ValidatorUtils.convertToUrl(data.image)
       if (image) product.image = image
-      else console.log('Error occured while uploading image')
+      else console.log("Error occured while uploading image")
     }
     if (data.variants) {
       product.variants = data.variants
@@ -71,7 +72,7 @@ class ProductRepo {
       _query.description = data.description
     }
     const product = await ProductModel.find(_query)
-      .populate('createdBy')
+      .populate("createdBy")
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit)
