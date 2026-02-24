@@ -10,6 +10,7 @@ import CheckoutRouter from "./CheckoutRouter"
 import OrderRouter from "./OrderRouter"
 import TransactionRouter from "./TransactionRouter"
 import ChatRouter from "./ChatRouter"
+import ChatbotRouter from "./ChatbotRouter"
 const Router = express.Router()
 Router.use("/profile", ProfileRouter)
 Router.use("/business", BusinessRouter)
@@ -22,4 +23,5 @@ Router.use("/transaction", TransactionRouter)
 Router.use("/verification/user", UserVerificationRouter)
 Router.use("/verification/admin", AdminVerificationRouter)
 Router.use("/chat", ChatRouter)
+Router.use("/ai-assistant", ChatbotRouter)
 export default Router
