@@ -3,5 +3,5 @@ import ChatbotController from "../Controller/ChatbotController"
 
 const ChatbotRouter = Router()
 
-ChatbotRouter.post("/chat-with-ai", ChatbotController.create)
+ChatbotRouter.post("/create-chat", ChatbotController.create)
 export default ChatbotRouter

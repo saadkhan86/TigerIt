@@ -2,7 +2,6 @@ import { Request, Response } from 'express'
 import BusinessRepo from '../Repositories/BusinessRepo'
 import VerificationRepo from '../Repositories/VerificationRepo'
 import sendEmail from '../Services/SendEmail'
-import ErrorHandler from '../ErrorHandler/ErrorHandler'
 const VerificationController = {
   verificationCreate: async (req: Request, res: Response, next: Function) => {
     try {

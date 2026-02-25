@@ -17,7 +17,6 @@ const ChatbotController = {
           { role: "user", content: req.body.message },
         ],
       })
-      console.log(aiResponse)
       res.status(200).json({ success: true, message: aiResponse.output_text })
     } catch (error) {
       next(error)

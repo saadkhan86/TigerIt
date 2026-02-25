@@ -12,16 +12,17 @@ import TransactionRouter from "./TransactionRouter"
 import ChatRouter from "./ChatRouter"
 import ChatbotRouter from "./ChatbotRouter"
 const Router = express.Router()
-Router.use("/profile", ProfileRouter)
-Router.use("/business", BusinessRouter)
-Router.use("/wallet", WalletRouter)
-Router.use("/product", ProductRouter)
+
+Router.use("/verification/admin", AdminVerificationRouter)
+Router.use("/verification/user", UserVerificationRouter)
+Router.use("/chat-with-ai-assistant", ChatbotRouter)
+Router.use("/transaction", TransactionRouter)
 Router.use("/wishlist", WishlistRouter)
 Router.use("/checkout", CheckoutRouter)
+Router.use("/business", BusinessRouter)
+Router.use("/profile", ProfileRouter)
+Router.use("/product", ProductRouter)
+Router.use("/wallet", WalletRouter)
 Router.use("/order", OrderRouter)
-Router.use("/transaction", TransactionRouter)
-Router.use("/verification/user", UserVerificationRouter)
-Router.use("/verification/admin", AdminVerificationRouter)
 Router.use("/chat", ChatRouter)
-Router.use("/ai-assistant", ChatbotRouter)
 export default Router
