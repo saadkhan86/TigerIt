@@ -8,11 +8,13 @@ const WishlistSchema = new Schema<IWishlist.Doc>(
       required: [true, "User Reference Required"],
       ref: "User",
     },
-    businessRef: {
-      type: Types.ObjectId,
-      required: [true, "Business Reference Required"],
-      ref: "Business",
-    },
+    businessRef: [
+      {
+        type: Types.ObjectId,
+        required: [true, "Business Reference Required"],
+        ref: "Business",
+      },
+    ],
   },
   { timestamps: true },
 )

@@ -2,8 +2,8 @@ import { Types } from "mongoose";
 import ChatModel from "../Models/Chat.Model";
 import UserModel from "../Models/User.Model";
 import MessageModel from "../Models/Message.Model";
-import IChat from "../Interfaces/IChat";
-import IMessage from "../Interfaces/IMessage";
+import {IChat} from "../Interfaces/IChat";
+import {IMessage} from "../Interfaces/IMessage";
 import ErrorHandler from "../ErrorHandler/ErrorHandler";
 
 class ChatRoomRepo {
