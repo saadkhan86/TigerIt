@@ -8,92 +8,109 @@
 ![Status](https://img.shields.io/badge/Status-Production--Ready-brightgreen)
 ![API](https://img.shields.io/badge/API-REST-blue)
 
+# TigerIt - E-Commerce & Marketplace Backend
 
+TigerIt is a comprehensive Node.js and TypeScript-based backend solution designed for a modern e-commerce and marketplace platform. It features real-time messaging, AI-powered chatbot assistance, secure payment processing, and a robust verification system for both users and administrators.
 
-Description
-----
-Tigerit Delivery is a production-ready backend system built with Node.js and Express.js.
-It provides a complete ecosystem for delivery-based platforms, including authentication, business management, orders, transactions, real-time chat, and AI-powered assistance.
-----
-Project Setup
-$ npm install
-🚀 Compile and Run the Project
-## development
-$ npm run start
+## Features
 
-----
+- **User & Admin Verification**: Secure authentication and verification flows for different user roles.
+- **E-Commerce Management**: Complete product lifecycle management, including categories, inventory, and wishlists.
+- **Business Suite**: Tools for businesses to manage their profiles, products, and transactions.
+- **Secure Payments**: Integrated with **Stripe** for seamless checkout experiences and wallet management.
+- **AI-Powered Chatbot**: Integration with **OpenAI** to provide intelligent customer support and shopping assistance.
+- **Real-Time Communication**: Powered by **Socket.IO** for instant notifications and chat functionality.
+- **Media Management**: Cloud-based image and video storage via **Cloudinary**.
+- **Email Notifications**: Automated email services using **Nodemailer**.
+- **Geocoding**: Location-based services for business and delivery tracking.
 
-## watch mode
-$ npm run dev
+## Tech Stack
 
-## production mode
-$ npm run start:prod
-Run Tests
----
+- **Runtime**: [Node.js](https://nodejs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Framework**: [Express.js](https://expressjs.com/)
+- **Database**: [MongoDB](https://www.mongodb.com/) (using [Mongoose](https://mongoosejs.com/))
+- **Real-time**: [Socket.IO](https://socket.io/)
+- **AI Integration**: [OpenAI API](https://openai.com/api/)
+- **Payments**: [Stripe](https://stripe.com/)
+- **Cloud Storage**: [Cloudinary](https://cloudinary.com/)
+- **Authentication**: [Firebase Admin SDK](https://firebase.google.com/docs/admin)
 
-## unit tests
-$ npm run test
----
-## integration / e2e tests
-$ npm run test:e2e
----
-## test coverage
-$ npm run test:cov
+##  Project Structure
 
-----
+```text
+Src/
+├── Config/         # Database and environment configurations
+├── Controller/     # Request handlers
+├── ErrorHandler/   # Global error handling logic
+├── Firebase/       # Firebase admin initialization
+├── Interfaces/     # TypeScript interfaces
+├── Middlewares/    # Custom Express middlewares
+├── Models/         # Mongoose schemas and models
+├── Repositories/   # Data access layer
+├── Routes/         # API endpoint definitions
+├── Services/       # Business logic and external integrations (Socket, AI, etc.)
+├── Types/          # Custom TypeScript types
+├── Utils/          # Helper functions
+└── server.ts       # Application entry point
+```
 
-## Deployment
+##     Installation & Setup
 
-When you're ready to deploy Tigerit Delivery API to production, make sure:
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/saadkhan86/TigerIt.git
+   cd TigerIt
+   ```
 
-Environment variables are properly configured
-Database (MongoDB) is connected securely
-JWT secrets are protected
-Rate limiting and logging are enabled
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-You can deploy easily on:
+3. **Environment Configuration**:
+   Create a `.env` file in the root directory and add the following variables:
+   ```env
+   PORT=8080
+   MONGODB_URL=your_mongodb_connection_string
+   EMAIL_USER=your_email@gmail.com
+   EMAIL_PASSWORD=your_app_password
+   CLOUDINARY_CLOUD_NAME=your_cloud_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
+   STRIPE_SECRET_KEY=your_stripe_secret_key
+   OPENAI_API_KEY=your_openai_api_key
+   ```
 
-Render
-Railway
-VPS (Ubuntu + Nginx)
+4. **Run the application**:
+   - **Development mode**:
+     ```bash
+     npm run dev
+     ```
+   - **Build for production**:
+     ```bash
+     npm run build
+     ```
 
-----
+##  API Endpoints
 
-## Resources
+The API is versioned and accessible under `/api/v1`.
 
-Check out these resources to better understand and extend the project:
+| Category | Endpoint | Description |
+| :--- | :--- | :--- |
+| **Verification** | `/verification/admin` | Admin authentication and verification |
+| | `/verification/user` | User authentication and verification |
+| **AI Assistant** | `/chat-with-ai-assistant` | AI-powered chatbot endpoint |
+| **Messaging** | `/chat` | Real-time chat services |
+| **Commerce** | `/product` | Product catalog management |
+| | `/order` | Order processing and history |
+| | `/wishlist` | User wishlist management |
+| **Payments** | `/checkout` | Stripe payment integration |
+| | `/transaction` | Transaction history |
+| | `/wallet` | Digital wallet management |
+| **Business** | `/business` | Business profile and management |
+| **Profile** | `/profile` | User profile management |
 
-Express.js Documentation (official)
-MongoDB & Mongoose Docs
-JWT Authentication Guides
-Socket.IO (for real-time chat)
+## License
 
-----
-
-## Features Overview
-Fully authenticated REST API
-Modular scalable architecture
-Real-time chat system
-AI chatbot integration
-Wallet & transaction system
-Business & product management
-Order & checkout workflow
-
-----
-
-## Support
-
-This project is open-source and built for learning + production use.
-You can contribute, fork, or use it in your own projects.
-
-----
-
-## Author
-
-**Saad Muhammad Bin Ramzan**
-
----
-
-# License
-
-This project is licensed under the MIT License.
+This project is licensed under the ISC License.
