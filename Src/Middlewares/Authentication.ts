@@ -1,30 +1,30 @@
 import { Request, Response } from "express"
-// import Admin from '../Firebase/Admin'
+import Admin from '../Firebase/Admin'
 import UserModel from "../Models/User.Model"
 import AdminModel from "../Models/Admin.Model"
 
 const Authentication = {
   userAuth: async (req: Request, res: Response, next: Function) => {
     try {
-      // let token: string | null = null
+      let token: string | null = null
 
-      // if (
-      //   req.headers.authorization &&
-      //   req.headers.authorization.startsWith('Bearer')
-      // ) {
-      //   token = req.headers.authorization.split(' ')[1]
-      // }
+       if (
+         req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+       ) {
+        token = req.headers.authorization.split(' ')[1]
+       }
 
-      // if (!token) {
-      //   return res.status(401).json({ success: false, message: 'Unauthorized' })
-      // }
+      if (!token) {
+         return res.status(401).json({ success: false, message: 'Unauthorized' })
+       }
 
-      // const decoded = await Admin.auth().verifyIdToken(token)
-      // if (!decoded) {
-      //   return res
-      //     .status(401)
-      //     .json({ success: false, message: 'Invalid Token Provided' })
-      // }
+       const decoded = await Admin.auth().verifyIdToken(token)
+       if (!decoded) {
+         return res
+           .status(401)
+           .json({ success: false, message: 'Invalid Token Provided' })
+       }
       req.user = user
       return next()
     } catch (error: any) {
