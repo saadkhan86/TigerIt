@@ -25,16 +25,6 @@ const Authentication = {
       //     .status(401)
       //     .json({ success: false, message: 'Invalid Token Provided' })
       // }
-
-      let user = await UserModel.findOne({ phone: "+923297681247" })
-
-      if (!user) {
-        user = await UserModel.create({
-          phone: "+923297681247",
-          firebaseId: "123456789",
-        })
-      }
-
       req.user = user
       return next()
     } catch (error: any) {
